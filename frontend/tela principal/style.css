@@ -1,0 +1,106 @@
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #0f0f12;
+  color: #E5E5E5;
+  display: flex;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Layout basics */
+.sidebar { display: none; }
+
+/* Topbar / Navbar */
+.topbar, nav {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.nav-item, .nav-item-active {
+  border-radius: 8px; /* menos arredondado */
+}
+
+.nav-item-active {
+  box-shadow: none; /* evitar sombras pesadas */
+}
+
+/* Inputs */
+.search-input, .topbar input, .test-input {
+  background: #141416;
+  border: 1px solid rgba(45,212,191,0.12);
+  padding: 10px 14px;
+  border-radius: 8px; /* menos redondo */
+  color: #E5E5E5;
+  transition: box-shadow 150ms ease, transform 150ms ease, border-color 150ms ease;
+}
+
+.search-input:focus, .test-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 6px 18px rgba(45,212,191,0.06); /* sutil */
+  transform: translateY(-1px);
+}
+
+/* Cards / Profile / Candidate */
+.card, .panel, .profile-card, .candidate-card, .test-window {
+  background: #151518;
+  border: 1px solid rgba(255,255,255,0.03);
+  border-radius: 10px; /* reduzido */
+  padding: 14px;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.card:hover, .profile-card:hover, .candidate-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(2,6,23,0.6), 0 6px 18px rgba(45,212,191,0.04); /* muito sutil colorido */
+  border-color: rgba(45,212,191,0.06);
+}
+
+/* Evitar sombras exageradas aplicadas inline - força leve */
+.shadow-lg, .hover\:shadow-lg { box-shadow: 0 6px 18px rgba(2,6,23,0.5) !important; }
+
+/* Test windows: tornar borda mais suave e profissional */
+.test-window {
+  border-style: solid; /* substituir dashed por sólido mais discreto */
+  border-width: 1px;
+  border-color: rgba(45,212,191,0.10);
+  border-radius: 10px;
+}
+
+.debug-console {
+  background: #0f0f10;
+  border: 1px solid rgba(255,255,255,0.02);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Buttons */
+.btn-primary, button[style*="--color-primary"], .btn-primary:hover {
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(13, 66, 30, 0.08);
+}
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px; }
+tbody tr { border-top: 1px solid rgba(255,255,255,0.03); }
+tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+/* Small helpers */
+.badge { border-radius: 6px; padding: 6px 10px; }
+.highlight-text { color: var(--color-accent); }
+
+/* Reduce overly rounded images */
+img { border-radius: 6px; }
+
+/* Reduce overall border emphasis */
+.border-strong { border-color: rgba(255,255,255,0.04) !important; }
