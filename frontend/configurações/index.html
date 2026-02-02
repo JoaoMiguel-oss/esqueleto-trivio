@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - Trivio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="flex flex-col min-h-screen bg-gray-900">
+        <!-- Header -->
+        <header class="bg-black border-b border-gray-800 px-8 py-4">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <svg class="w-8 h-8" style="color: #1e40af;" viewBox="0 0 24 24">
+                        <path d="M12 2L2 12H5.09C5.39 15.11 7.23 18.04 10.02 19.46L12 21.36L13.98 19.46C16.77 18.04 18.61 15.11 18.91 12H22L12 2Z" fill="currentColor"/>
+                    </svg>
+                    <span class="text-2xl font-bold text-white">Trivio</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-4xl font-bold mb-3 text-white">Configurações</h1>
+                <p class="text-gray-400 mb-8">Personalize suas preferências e gerencie sua conta</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Preferências Gerais -->
+                    <div class="bg-gray-800 border border-gray-700 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-white">Preferências Gerais</h3>
+                        <div class="space-y-4">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" checked class="w-4 h-4 text-teal-500 bg-gray-700 border-gray-600 rounded focus:ring-teal-500">
+                                <span class="text-sm text-gray-300">Notificações por Email</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" checked class="w-4 h-4 text-teal-500 bg-gray-700 border-gray-600 rounded focus:ring-teal-500">
+                                <span class="text-sm text-gray-300">Modo Escuro</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 text-teal-500 bg-gray-700 border-gray-600 rounded focus:ring-teal-500">
+                                <span class="text-sm text-gray-300">Notificações Push</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" checked class="w-4 h-4 text-teal-500 bg-gray-700 border-gray-600 rounded focus:ring-teal-500">
+                                <span class="text-sm text-gray-300">Atualizações Automáticas</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Segurança -->
+                    <div class="bg-gray-800 border border-gray-700 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-white">Segurança</h3>
+                        <div class="space-y-3">
+                            <button class="w-full py-3 px-4 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg transition duration-200 transform hover:scale-105">
+                                Alterar Senha
+                            </button>
+                            <button class="w-full py-3 px-4 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg transition duration-200 transform hover:scale-105">
+                                Autenticação de Dois Fatores
+                            </button>
+                            <button class="w-full py-3 px-4 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition duration-200 transform hover:scale-105">
+                                Gerenciar Dispositivos
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Privacidade -->
+                    <div class="bg-gray-800 border border-gray-700 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-white">Privacidade</h3>
+                        <div class="space-y-4">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" checked class="w-4 h-4 text-teal-500 bg-gray-700 border-gray-600 rounded focus:ring-teal-500">
+                                <span class="text-sm text-gray-300">Perfil Público</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 text-teal-500 bg-gray-700 border-gray-600 rounded focus:ring-teal-500">
+                                <span class="text-sm text-gray-300">Compartilhar Dados de Uso</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" checked class="w-4 h-4 text-teal-500 bg-gray-700 border-gray-600 rounded focus:ring-teal-500">
+                                <span class="text-sm text-gray-300">Cookies Essenciais</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Notificações -->
+                    <div class="bg-gray-800 border border-gray-700 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-white">Notificações</h3>
+                        <div class="space-y-4">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" checked class="w-4 h-4 text-teal-500 bg-gray-700 border-gray-600 rounded focus:ring-teal-500">
+                                <span class="text-sm text-gray-300">Novos Candidatos</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" checked class="w-4 h-4 text-teal-500 bg-gray-700 border-gray-600 rounded focus:ring-teal-500">
+                                <span class="text-sm text-gray-300">Mensagens</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 text-teal-500 bg-gray-700 border-gray-600 rounded focus:ring-teal-500">
+                                <span class="text-sm text-gray-300">Atualizações do Sistema</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ações -->
+                <div class="mt-8 flex gap-4">
+                    <button class="py-3 px-6 bg-blue-800 hover:bg-blue-900 text-white font-semibold rounded-lg transition duration-200 transform hover:scale-105">
+                        Salvar Alterações
+                    </button>
+                    <button class="py-3 px-6 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition duration-200 transform hover:scale-105">
+                        Cancelar
+                    </button>
+                </div>
+
+                <!-- Voltar -->
+                <div class="mt-8">
+                    <a href="../tela principal/index.html" class="text-teal-400 hover:text-teal-300 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        Voltar à Tela Principal
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
