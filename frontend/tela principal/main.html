@@ -82,65 +82,68 @@
 </head>
 
 <body>
-    <div class="flex flex-col h-screen">
+    <div class="flex h-screen">
 
-        <!-- Navbar Principal -->
-        <nav class="bg-black border-b border-gray-800 px-8 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2">
+        <!-- Sidebar Lateral -->
+        <aside class="w-64 bg-gray-950 border-r border-gray-800 flex flex-col">
+            <!-- Logo -->
+            <div class="p-6 border-b border-gray-800">
+                <div class="flex items-center gap-3">
                     <svg class="w-8 h-8" style="color: var(--color-primary);" viewBox="0 0 24 24">
                         <path d="M12 2L2 12H5.09C5.39 15.11 7.23 18.04 10.02 19.46L12 21.36L13.98 19.46C16.77 18.04 18.61 15.11 18.91 12H22L12 2Z" fill="currentColor"/>
                     </svg>
-                    <span class="text-2xl font-bold text-white">Trivio</span>
+                    <span class="text-xl font-bold text-white">Trivio</span>
                 </div>
             </div>
 
-            <!-- Menu itens -->
-            <div class="flex items-center gap-2 flex-1 ml-12">
-                <button onclick="showSection('bugs')" class="nav-item nav-item-active flex items-center px-5 py-2 rounded-lg transition duration-200" style="background-color: var(--color-primary);">
-                    <svg class="icon text-white mr-2 w-5 h-5" viewBox="0 0 24 24">
+            <!-- Menu Items -->
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <button onclick="showSection('bugs')" class="nav-item nav-item-active w-full flex items-center px-4 py-3 rounded-lg transition duration-200" style="background-color: var(--color-primary);">
+                    <svg class="icon text-white mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <path d="M12 2L2 12H5.09C5.39 15.11 7.23 18.04 10.02 19.46L12 21.36L13.98 19.46C16.77 18.04 18.61 15.11 18.91 12H22L12 2Z" fill="currentColor"/>
                     </svg>
-                    <span class="hidden lg:inline text-sm font-semibold">Bugs para Resolver</span>
+                    <span class="text-sm font-semibold">Bugs para Resolver</span>
                 </button>
 
-                <button onclick="showSection('pagamentos')" class="nav-item flex items-center px-5 py-2 rounded-lg text-gray-300 hover:text-white transition duration-200">
-                    <svg class="icon text-gray-400 mr-2 w-5 h-5" viewBox="0 0 24 24">
+                <button onclick="showSection('pagamentos')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 transition duration-200">
+                    <svg class="icon text-gray-400 mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
                         <path d="M1 9h22" stroke="currentColor" stroke-width="2" fill="none"/>
                     </svg>
-                    <span class="hidden lg:inline text-sm">Pagamentos</span>
+                    <span class="text-sm">Pagamentos</span>
                 </button>
 
-                <button onclick="showSection('configuracoes')" class="nav-item flex items-center px-5 py-2 rounded-lg text-gray-300 hover:text-white transition duration-200">
-                    <svg class="icon text-gray-400 mr-2 w-5 h-5" viewBox="0 0 24 24">
+                <button onclick="showSection('configuracoes')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 transition duration-200">
+                    <svg class="icon text-gray-400 mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
                         <circle cx="12" cy="19" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
                         <circle cx="12" cy="5" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
                         <path d="M9.09 9.09a3 3 0 0 0 4.24 4.24" stroke="currentColor" stroke-width="2" fill="none"/>
                     </svg>
-                    <span class="hidden lg:inline text-sm">Configurações</span>
+                    <span class="text-sm">Configurações</span>
                 </button>
 
-                <button onclick="showSection('perfil')" class="nav-item flex items-center px-5 py-2 rounded-lg text-gray-300 hover:text-white transition duration-200">
-                    <svg class="icon text-gray-400 mr-2 w-5 h-5" viewBox="0 0 24 24">
+                <button onclick="showSection('perfil')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 transition duration-200">
+                    <svg class="icon text-gray-400 mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                         <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                     </svg>
-                    <span class="hidden lg:inline text-sm">Perfil</span>
+                    <span class="text-sm">Perfil</span>
                 </button>
-            </div>
+            </nav>
 
-            <!-- User info -->
-            <div class="flex items-center gap-3 ml-auto">
-                <div class="hidden md:block text-right">
-                    <p class="text-sm font-semibold">Admin User</p>
-                    <p class="text-xs text-gray-400">Administrador</p>
+            <!-- User Info at Bottom -->
+            <div class="p-4 border-t border-gray-800 space-y-4">
+                <div class="flex items-center gap-3">
+                    <img class="w-10 h-10 rounded-lg object-cover" src="https://placehold.co/40x40/D97706/1B1B1B?text=AD" alt="User">
+                    <div class="flex-1">
+                        <p class="text-sm font-semibold text-white">Admin User</p>
+                        <p class="text-xs text-gray-400">Administrador</p>
+                    </div>
                 </div>
-                <img class="w-10 h-10 rounded-lg object-cover" src="https://placehold.co/40x40/D97706/1B1B1B?text=AD" alt="User">
-                <button class="px-3 py-1 rounded-lg border border-gray-600 text-sm hover:border-gray-400 transition">Sair</button>
+                <button class="w-full px-3 py-2 rounded-lg border border-gray-600 text-sm hover:border-gray-400 transition text-gray-300 hover:text-white">Sair</button>
             </div>
-        </nav>
+        </aside>
 
         <!-- Main Content -->
         <main class="flex-1 overflow-y-auto bg-gradient-to-b from-gray-900 to-black p-8">
