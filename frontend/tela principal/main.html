@@ -82,14 +82,14 @@
 
             <!-- Menu Items -->
             <nav class="flex-1 px-4 py-6 space-y-2">
-                <button onclick="loadSection('bugs')" class="nav-item nav-item-active w-full flex items-center px-4 py-3 rounded-lg transition duration-200" style="background-color: var(--color-primary);">
+                <button onclick="loadSection('bugs', this)" class="nav-item nav-item-active w-full flex items-center px-4 py-3 rounded-lg transition duration-200" style="background-color: var(--color-primary);">
                     <svg class="icon text-white mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <path d="M12 2L2 12H5.09C5.39 15.11 7.23 18.04 10.02 19.46L12 21.36L13.98 19.46C16.77 18.04 18.61 15.11 18.91 12H22L12 2Z" fill="currentColor"/>
                     </svg>
                     <span class="text-sm font-semibold">Bugs para Resolver</span>
                 </button>
 
-                <button onclick="loadSection('pagamentos')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
+                <button onclick="loadSection('pagamentos', this)" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
                     <svg class="icon text-gray-500 mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
                         <path d="M1 9h22" stroke="currentColor" stroke-width="2" fill="none"/>
@@ -97,7 +97,7 @@
                     <span class="text-sm">Pagamentos</span>
                 </button>
 
-                <button onclick="loadSection('configuracoes')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
+                <button onclick="loadSection('configuracoes', this)" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
                     <svg class="icon text-gray-500 mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
                         <circle cx="12" cy="19" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
@@ -107,7 +107,7 @@
                     <span class="text-sm">Configurações</span>
                 </button>
 
-                <button onclick="loadSection('perfil')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
+                <button onclick="loadSection('perfil', this)" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
                     <svg class="icon text-gray-500 mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                         <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -133,13 +133,11 @@
         <main class="flex-1 overflow-y-auto bg-gradient-to-b from-gray-900 to-black p-8" id="main-content">
             <!-- Conteúdo será carregado aqui via JavaScript -->
         </main>
-
-        </main>
     </div>
 
     <script>
         // Carrega o conteúdo de um módulo
-        async function loadSection(sectionName) {
+        async function loadSection(sectionName, buttonElement) {
             try {
                 const response = await fetch(`./modules/${sectionName}.html`);
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -149,13 +147,22 @@
                 // Atualizar botão ativo na sidebar
                 const navItems = document.querySelectorAll('.nav-item');
                 navItems.forEach(item => item.classList.remove('nav-item-active'));
-                event.target.closest('.nav-item').classList.add('nav-item-active');
+                buttonElement.classList.add('nav-item-active');
+                buttonElement.style.backgroundColor = 'var(--color-primary)';
+                
+                // Resetar os outros botões
+                navItems.forEach(item => {
+                    if (item !== buttonElement) {
+                        item.style.backgroundColor = 'transparent';
+                    }
+                });
             } catch (error) {
                 console.error(`Erro ao carregar módulo ${sectionName}:`, error);
                 document.getElementById('main-content').innerHTML = `
                     <div class="p-6 rounded-lg" style="background-color: var(--color-surface);">
                         <p class="text-red-400 font-semibold mb-2">⚠️ Erro ao carregar conteúdo</p>
-                        <p class="text-sm text-gray-400">Verifique se os arquivos estão em: tela principal/modules/${sectionName}.html</p>
+                        <p class="text-sm text-gray-400">Módulo: ${sectionName}</p>
+                        <p class="text-sm text-gray-400">Caminho esperado: ./modules/${sectionName}.html</p>
                         <p class="text-xs text-gray-500 mt-2">Erro: ${error.message}</p>
                     </div>
                 `;
@@ -164,7 +171,8 @@
 
         // Carregar seção padrão ao iniciar
         document.addEventListener('DOMContentLoaded', () => {
-            loadSection('bugs');
+            const bugsButton = document.querySelector('button[onclick*="bugs"]');
+            if (bugsButton) loadSection('bugs', bugsButton);
         });
     </script>
 
