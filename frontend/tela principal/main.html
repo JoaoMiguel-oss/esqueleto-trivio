@@ -9,16 +9,16 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         
         :root {
-            --color-dark-bg: #1B1B1B;
-            --color-surface: #262626;
-            --color-primary: #1e40af;
-            --color-accent: #2DD4BF;
+            --color-dark-bg: #1A1A1A;
+            --color-surface: #242424;
+            --color-primary: #E91E63;
+            --color-accent: #FF1493;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--color-dark-bg);
-            color: #E5E5E5;
+            color: #FFFFFF;
         }
 
         .icon {
@@ -53,8 +53,8 @@
 
         .candidate-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 10px 24px rgba(45, 212, 191, 0.08);
-            border-color: rgba(45, 212, 191, 0.2);
+            box-shadow: 0 10px 24px rgba(233, 30, 99, 0.15);
+            border-color: rgba(233, 30, 99, 0.3);
         }
 
         .btn-hover {
@@ -67,16 +67,16 @@
         }
 
         .card-stat {
-            background: linear-gradient(135deg, rgba(217, 119, 6, 0.1), rgba(45, 212, 191, 0.05));
-            border: 1px solid rgba(45, 212, 191, 0.1);
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.1), rgba(255, 20, 147, 0.05));
+            border: 1px solid rgba(233, 30, 99, 0.2);
             border-radius: 10px;
             padding: 20px;
             transition: all 0.3s ease;
         }
 
         .card-stat:hover {
-            border-color: rgba(45, 212, 191, 0.3);
-            background: linear-gradient(135deg, rgba(217, 119, 6, 0.15), rgba(45, 212, 191, 0.1));
+            border-color: rgba(233, 30, 99, 0.4);
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.15), rgba(255, 20, 147, 0.1));
         }
     </style>
 </head>
@@ -105,16 +105,16 @@
                     <span class="text-sm font-semibold">Bugs para Resolver</span>
                 </button>
 
-                <button onclick="showSection('pagamentos')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 transition duration-200">
-                    <svg class="icon text-gray-400 mr-3 w-5 h-5" viewBox="0 0 24 24">
+                <button onclick="showSection('pagamentos')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
+                    <svg class="icon text-gray-500 mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
                         <path d="M1 9h22" stroke="currentColor" stroke-width="2" fill="none"/>
                     </svg>
                     <span class="text-sm">Pagamentos</span>
                 </button>
 
-                <button onclick="showSection('configuracoes')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 transition duration-200">
-                    <svg class="icon text-gray-400 mr-3 w-5 h-5" viewBox="0 0 24 24">
+                <button onclick="showSection('configuracoes')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
+                    <svg class="icon text-gray-500 mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
                         <circle cx="12" cy="19" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
                         <circle cx="12" cy="5" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
@@ -123,8 +123,8 @@
                     <span class="text-sm">Configurações</span>
                 </button>
 
-                <button onclick="showSection('perfil')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 transition duration-200">
-                    <svg class="icon text-gray-400 mr-3 w-5 h-5" viewBox="0 0 24 24">
+                <button onclick="showSection('perfil')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
+                    <svg class="icon text-gray-500 mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                         <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                     </svg>
@@ -138,10 +138,10 @@
                     <img class="w-10 h-10 rounded-lg object-cover" src="https://placehold.co/40x40/D97706/1B1B1B?text=AD" alt="User">
                     <div class="flex-1">
                         <p class="text-sm font-semibold text-white">Admin User</p>
-                        <p class="text-xs text-gray-400">Administrador</p>
+                        <p class="text-xs text-gray-500">Administrador</p>
                     </div>
                 </div>
-                <button class="w-full px-3 py-2 rounded-lg border border-gray-600 text-sm hover:border-gray-400 transition text-gray-300 hover:text-white">Sair</button>
+                <button class="w-full px-3 py-2 rounded-lg border border-gray-600 text-sm hover:border-gray-400 transition text-gray-100 hover:text-white">Sair</button>
             </div>
         </aside>
 
@@ -152,28 +152,28 @@
             <section id="bugs" class="content-section active">
                 <div class="mb-10">
                     <h1 class="text-4xl font-bold mb-3">Bugs para Resolver</h1>
-                    <p class="text-gray-400">Bugs enviados por empresas para a comunidade resolver</p>
+                    <p class="text-gray-500">Bugs enviados por empresas para a comunidade resolver</p>
                 </div>
 
                 <!-- Cards de Estatísticas -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
                     <div class="card-stat">
-                        <p class="text-gray-400 text-sm mb-2">Total de Bugs</p>
+                        <p class="text-gray-500 text-sm mb-2">Total de Bugs</p>
                         <h3 class="text-3xl font-bold">156</h3>
                         <p class="text-xs mt-2" style="color: var(--color-accent);">↑ 24% vs mês anterior</p>
                     </div>
                     <div class="card-stat">
-                        <p class="text-gray-400 text-sm mb-2">Bugs Resolvidos</p>
+                        <p class="text-gray-500 text-sm mb-2">Bugs Resolvidos</p>
                         <h3 class="text-3xl font-bold">89</h3>
                         <p class="text-xs mt-2 text-green-400">✓ 57% resolvidos</p>
                     </div>
                     <div class="card-stat">
-                        <p class="text-gray-400 text-sm mb-2">Dificuldade Média</p>
+                        <p class="text-gray-500 text-sm mb-2">Dificuldade Média</p>
                         <h3 class="text-3xl font-bold">Média</h3>
                         <p class="text-xs mt-2" style="color: var(--color-primary);">Todos os níveis</p>
                     </div>
                     <div class="card-stat">
-                        <p class="text-gray-400 text-sm mb-2">Novos Hoje</p>
+                        <p class="text-gray-500 text-sm mb-2">Novos Hoje</p>
                         <h3 class="text-3xl font-bold">12</h3>
                         <p class="text-xs mt-2 text-blue-400">Aguardando resolução</p>
                     </div>
@@ -183,8 +183,8 @@
                 <div class="flex flex-col md:flex-row gap-4 mb-10">
                     <div class="relative flex-1">
                         <input type="text" placeholder="Buscar por título, linguagem ou empresa..." 
-                            class="w-full py-3 pl-12 pr-4 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/30 transition"
-                            style="border-color: rgba(45,212,191,0.1); background-color: #1a1a1f;">
+                            class="w-full py-3 pl-12 pr-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400/30 transition"
+                            style="border-color: rgba(233, 30, 99, 0.2); background-color: #2D2D2D;">
                         <svg class="icon absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" viewBox="0 0 24 24">
                             <path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM21.5 21.5L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                         </svg>
@@ -196,21 +196,21 @@
                 <!-- Grid de Bugs -->
                 <div class="grid grid-cols-1 gap-6">
                     <!-- Card 1 -->
-                    <div class="candidate-card p-6 bg-gray-800" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="candidate-card p-6 bg-gray-900" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-14 h-14 rounded-lg bg-red-900 flex items-center justify-center text-white font-bold text-lg">BUG</div>
                                 <div>
                                     <h3 class="font-bold text-lg">Login não funciona</h3>
-                                    <p class="text-sm text-gray-400">Google Workspace</p>
+                                    <p class="text-sm text-gray-500">Google Workspace</p>
                                 </div>
                             </div>
                             <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(220, 38, 38, 0.2); color: #DC2626;">Alto</span>
                         </div>
                         <div class="space-y-2 mb-4 text-sm">
-                            <div class="flex justify-between"><span class="text-gray-400">Linguagem:</span><span>JavaScript/React</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 500</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Tentativas:</span><span>3 pessoas</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>JavaScript/React</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 500</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>3 pessoas</span></div>
                         </div>
                         <div class="flex gap-2">
                             <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
@@ -219,21 +219,21 @@
                     </div>
 
                     <!-- Card 2 -->
-                    <div class="candidate-card p-6 bg-gray-800" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="candidate-card p-6 bg-gray-900" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-14 h-14 rounded-lg bg-yellow-900 flex items-center justify-center text-white font-bold text-lg">BUG</div>
                                 <div>
                                     <h3 class="font-bold text-lg">Botão Save não envia</h3>
-                                    <p class="text-sm text-gray-400">Shopify</p>
+                                    <p class="text-sm text-gray-500">Shopify</p>
                                 </div>
                             </div>
                             <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(217, 119, 6, 0.2); color: #D97706;">Médio</span>
                         </div>
                         <div class="space-y-2 mb-4 text-sm">
-                            <div class="flex justify-between"><span class="text-gray-400">Linguagem:</span><span>Python/Django</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 350</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Tentativas:</span><span>1 pessoa</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>Python/Django</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 350</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>1 pessoa</span></div>
                         </div>
                         <div class="flex gap-2">
                             <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
@@ -242,21 +242,21 @@
                     </div>
 
                     <!-- Card 3 -->
-                    <div class="candidate-card p-6 bg-gray-800" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="candidate-card p-6 bg-gray-900" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-14 h-14 rounded-lg bg-blue-900 flex items-center justify-center text-white font-bold text-lg">BUG</div>
                                 <div>
                                     <h3 class="font-bold text-lg">API timeout aleatório</h3>
-                                    <p class="text-sm text-gray-400">Netflix Clone</p>
+                                    <p class="text-sm text-gray-500">Netflix Clone</p>
                                 </div>
                             </div>
                             <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(59, 130, 246, 0.2); color: #3B82F6;">Baixo</span>
                         </div>
                         <div class="space-y-2 mb-4 text-sm">
-                            <div class="flex justify-between"><span class="text-gray-400">Linguagem:</span><span>Node.js/Express</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 250</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Tentativas:</span><span>5 pessoas</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>Node.js/Express</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 250</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>5 pessoas</span></div>
                         </div>
                         <div class="flex gap-2">
                             <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
@@ -265,21 +265,21 @@
                     </div>
 
                     <!-- Card 4 -->
-                    <div class="candidate-card p-6 bg-gray-800" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="candidate-card p-6 bg-gray-900" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-14 h-14 rounded-lg bg-red-900 flex items-center justify-center text-white font-bold text-lg">BUG</div>
                                 <div>
                                     <h3 class="font-bold text-lg">CSS responsivo quebrado</h3>
-                                    <p class="text-sm text-gray-400">E-commerce XYZ</p>
+                                    <p class="text-sm text-gray-500">E-commerce XYZ</p>
                                 </div>
                             </div>
                             <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(220, 38, 38, 0.2); color: #DC2626;">Alto</span>
                         </div>
                         <div class="space-y-2 mb-4 text-sm">
-                            <div class="flex justify-between"><span class="text-gray-400">Linguagem:</span><span>HTML/CSS/Vue</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 400</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Tentativas:</span><span>2 pessoas</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>HTML/CSS/Vue</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 400</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>2 pessoas</span></div>
                         </div>
                         <div class="flex gap-2">
                             <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
@@ -288,21 +288,21 @@
                     </div>
 
                     <!-- Card 5 -->
-                    <div class="candidate-card p-6 bg-gray-800" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="candidate-card p-6 bg-gray-900" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-14 h-14 rounded-lg bg-yellow-900 flex items-center justify-center text-white font-bold text-lg">BUG</div>
                                 <div>
                                     <h3 class="font-bold text-lg">Validação de email</h3>
-                                    <p class="text-sm text-gray-400">SaaS Platform</p>
+                                    <p class="text-sm text-gray-500">SaaS Platform</p>
                                 </div>
                             </div>
                             <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(217, 119, 6, 0.2); color: #D97706;">Médio</span>
                         </div>
                         <div class="space-y-2 mb-4 text-sm">
-                            <div class="flex justify-between"><span class="text-gray-400">Linguagem:</span><span>Java/Spring Boot</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 300</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Tentativas:</span><span>4 pessoas</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>Java/Spring Boot</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 300</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>4 pessoas</span></div>
                         </div>
                         <div class="flex gap-2">
                             <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
@@ -311,21 +311,21 @@
                     </div>
 
                     <!-- Card 6 -->
-                    <div class="candidate-card p-6 bg-gray-800" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="candidate-card p-6 bg-gray-900" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-14 h-14 rounded-lg bg-blue-900 flex items-center justify-center text-white font-bold text-lg">BUG</div>
                                 <div>
                                     <h3 class="font-bold text-lg">Erro ao fazer upload</h3>
-                                    <p class="text-sm text-gray-400">Cloud Storage App</p>
+                                    <p class="text-sm text-gray-500">Cloud Storage App</p>
                                 </div>
                             </div>
                             <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(59, 130, 246, 0.2); color: #3B82F6;">Baixo</span>
                         </div>
                         <div class="space-y-2 mb-4 text-sm">
-                            <div class="flex justify-between"><span class="text-gray-400">Linguagem:</span><span>PHP/Laravel</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 280</span></div>
-                            <div class="flex justify-between"><span class="text-gray-400">Tentativas:</span><span>6 pessoas</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>PHP/Laravel</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 280</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>6 pessoas</span></div>
                         </div>
                         <div class="flex gap-2">
                             <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
@@ -347,33 +347,33 @@
             <!-- ===== SEÇÃO: PAGAMENTOS ===== -->
             <section id="pagamentos" class="content-section">
                 <h1 class="text-4xl font-bold mb-3">Pagamentos</h1>
-                <p class="text-gray-400 mb-8">Gerencie suas transações e saldos</p>
+                <p class="text-gray-500 mb-8">Gerencie suas transações e saldos</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <div class="card-stat">
-                        <p class="text-gray-400 text-sm mb-2">Saldo Disponível</p>
+                        <p class="text-gray-500 text-sm mb-2">Saldo Disponível</p>
                         <h3 class="text-3xl font-bold" style="color: var(--color-accent);">R$ 5.240,00</h3>
                     </div>
                     <div class="card-stat">
-                        <p class="text-gray-400 text-sm mb-2">Pagamentos Este Mês</p>
+                        <p class="text-gray-500 text-sm mb-2">Pagamentos Este Mês</p>
                         <h3 class="text-3xl font-bold">R$ 12.500,00</h3>
                     </div>
                     <div class="card-stat">
-                        <p class="text-gray-400 text-sm mb-2">Próximo Pagamento</p>
+                        <p class="text-gray-500 text-sm mb-2">Próximo Pagamento</p>
                         <h3 class="text-3xl font-bold" style="color: var(--color-primary);">05 de Janeiro</h3>
                     </div>
                 </div>
 
                 <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
                     <h3 class="text-xl font-bold mb-4">Histórico de Transações</h3>
-                    <p class="text-gray-400">Nenhuma transação registrada ainda.</p>
+                    <p class="text-gray-500">Nenhuma transação registrada ainda.</p>
                 </div>
             </section>
 
             <!-- ===== SEÇÃO: CONFIGURAÇÕES ===== -->
             <section id="configuracoes" class="content-section">
                 <h1 class="text-4xl font-bold mb-3">Configurações</h1>
-                <p class="text-gray-400 mb-8">Personalize suas preferências</p>
+                <p class="text-gray-500 mb-8">Personalize suas preferências</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
@@ -403,29 +403,29 @@
             <!-- ===== SEÇÃO: PERFIL ===== -->
             <section id="perfil" class="content-section">
                 <h1 class="text-4xl font-bold mb-3">Meu Perfil</h1>
-                <p class="text-gray-400 mb-8">Informações e dados pessoais</p>
+                <p class="text-gray-500 mb-8">Informações e dados pessoais</p>
 
                 <div class="max-w-2xl p-8 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
                     <div class="flex items-center mb-8">
                         <img class="w-20 h-20 rounded-lg object-cover mr-6" src="https://placehold.co/80x80/D97706/1B1B1B?text=AD" alt="Perfil">
                         <div>
                             <h3 class="text-2xl font-bold">Admin User</h3>
-                            <p class="text-gray-400">Administrador do Trivio</p>
+                            <p class="text-gray-500">Administrador do Trivio</p>
                         </div>
                     </div>
 
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold mb-2">E-mail</label>
-                            <input type="email" value="admin@trivio.com" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-cyan-400 transition">
+                            <input type="email" value="admin@trivio.com" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold mb-2">Telefone</label>
-                            <input type="tel" value="(11) 99999-9999" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-cyan-400 transition">
+                            <input type="tel" value="(11) 99999-9999" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold mb-2">Empresa</label>
-                            <input type="text" value="Trivio Corp" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-cyan-400 transition">
+                            <input type="text" value="Trivio Corp" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
                         </div>
                         <div class="flex gap-4 pt-4">
                             <button class="flex-1 py-2 rounded-lg font-bold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Salvar</button>

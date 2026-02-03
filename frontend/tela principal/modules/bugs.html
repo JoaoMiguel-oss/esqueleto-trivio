@@ -1,0 +1,194 @@
+<div>
+    <div class="mb-10">
+        <h1 class="text-4xl font-bold mb-3">Bugs para Resolver</h1>
+        <p class="text-gray-500">Bugs enviados por empresas para a comunidade resolver</p>
+    </div>
+
+    <!-- Cards de Estatísticas -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+        <div class="card-stat">
+            <p class="text-gray-500 text-sm mb-2">Total de Bugs</p>
+            <h3 class="text-3xl font-bold">156</h3>
+            <p class="text-xs mt-2" style="color: var(--color-accent);">↑ 24% vs mês anterior</p>
+        </div>
+        <div class="card-stat">
+            <p class="text-gray-500 text-sm mb-2">Bugs Resolvidos</p>
+            <h3 class="text-3xl font-bold">89</h3>
+            <p class="text-xs mt-2 text-green-400">✓ 57% resolvidos</p>
+        </div>
+        <div class="card-stat">
+            <p class="text-gray-500 text-sm mb-2">Dificuldade Média</p>
+            <h3 class="text-3xl font-bold">Média</h3>
+            <p class="text-xs mt-2" style="color: var(--color-primary);">Todos os níveis</p>
+        </div>
+        <div class="card-stat">
+            <p class="text-gray-500 text-sm mb-2">Novos Hoje</p>
+            <h3 class="text-3xl font-bold">12</h3>
+            <p class="text-xs mt-2 text-blue-400">Aguardando resolução</p>
+        </div>
+    </div>
+
+    <!-- Filtros e Busca -->
+    <div class="flex flex-col md:flex-row gap-4 mb-10">
+        <div class="relative flex-1">
+            <input type="text" placeholder="Buscar por título, linguagem ou empresa..." 
+                class="w-full py-3 pl-12 pr-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500/30 transition"
+                style="border-color: rgba(233, 30, 99, 0.2); background-color: #2D2D2D;">
+            <svg class="icon absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" viewBox="0 0 24 24">
+                <path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM21.5 21.5L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+        </div>
+        <button class="px-6 py-3 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Filtrar</button>
+        <button class="px-6 py-3 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Baixar</button>
+    </div>
+
+    <!-- Grid de Bugs -->
+    <div class="grid grid-cols-1 gap-6">
+        <!-- Card 1 -->
+        <div class="p-6 rounded-lg transition-all hover:shadow-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-14 h-14 rounded-lg bg-red-900 flex items-center justify-center text-white font-bold text-lg">BUG</div>
+                    <div>
+                        <h3 class="font-bold text-lg">Login não funciona</h3>
+                        <p class="text-sm text-gray-500">Google Workspace</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(220, 38, 38, 0.2); color: #DC2626;">Alto</span>
+            </div>
+            <div class="space-y-2 mb-4 text-sm">
+                <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>JavaScript/React</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 500</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>3 pessoas</span></div>
+            </div>
+            <div class="flex gap-2">
+                <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
+                <button class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Resolver</button>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="p-6 rounded-lg transition-all hover:shadow-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-14 h-14 rounded-lg bg-yellow-900 flex items-center justify-center text-white font-bold text-lg">BUG</div>
+                    <div>
+                        <h3 class="font-bold text-lg">Botão Save não envia</h3>
+                        <p class="text-sm text-gray-500">Shopify</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(217, 119, 6, 0.2); color: #D97706;">Médio</span>
+            </div>
+            <div class="space-y-2 mb-4 text-sm">
+                <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>Python/Django</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 350</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>1 pessoa</span></div>
+            </div>
+            <div class="flex gap-2">
+                <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
+                <button class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Resolver</button>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="p-6 rounded-lg transition-all hover:shadow-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-14 h-14 rounded-lg bg-blue-900 flex items-center justify-center text-white font-bold text-lg">BUG</div>
+                    <div>
+                        <h3 class="font-bold text-lg">API timeout aleatório</h3>
+                        <p class="text-sm text-gray-500">Netflix Clone</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(59, 130, 246, 0.2); color: #3B82F6;">Baixo</span>
+            </div>
+            <div class="space-y-2 mb-4 text-sm">
+                <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>Node.js/Express</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 250</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>5 pessoas</span></div>
+            </div>
+            <div class="flex gap-2">
+                <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
+                <button class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Resolver</button>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="p-6 rounded-lg transition-all hover:shadow-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-14 h-14 rounded-lg bg-red-900 flex items-center justify-center text-white font-bold text-lg">BUG</div>
+                    <div>
+                        <h3 class="font-bold text-lg">CSS responsivo quebrado</h3>
+                        <p class="text-sm text-gray-500">E-commerce XYZ</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(220, 38, 38, 0.2); color: #DC2626;">Alto</span>
+            </div>
+            <div class="space-y-2 mb-4 text-sm">
+                <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>HTML/CSS/Vue</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 400</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>2 pessoas</span></div>
+            </div>
+            <div class="flex gap-2">
+                <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
+                <button class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Resolver</button>
+            </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="p-6 rounded-lg transition-all hover:shadow-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-14 h-14 rounded-lg bg-yellow-900 flex items-center justify-center text-white font-bold text-lg">BUG</div>
+                    <div>
+                        <h3 class="font-bold text-lg">Validação de email</h3>
+                        <p class="text-sm text-gray-500">SaaS Platform</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(217, 119, 6, 0.2); color: #D97706;">Médio</span>
+            </div>
+            <div class="space-y-2 mb-4 text-sm">
+                <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>Java/Spring Boot</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 300</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>4 pessoas</span></div>
+            </div>
+            <div class="flex gap-2">
+                <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
+                <button class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Resolver</button>
+            </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="p-6 rounded-lg transition-all hover:shadow-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-14 h-14 rounded-lg bg-blue-900 flex items-center justify-center text-white font-bold text-lg">BUG</div>
+                    <div>
+                        <h3 class="font-bold text-lg">Erro ao fazer upload</h3>
+                        <p class="text-sm text-gray-500">Cloud Storage App</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(59, 130, 246, 0.2); color: #3B82F6;">Baixo</span>
+            </div>
+            <div class="space-y-2 mb-4 text-sm">
+                <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>PHP/Laravel</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 280</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>6 pessoas</span></div>
+            </div>
+            <div class="flex gap-2">
+                <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
+                <button class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Resolver</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Paginação -->
+    <div class="flex justify-center items-center gap-2 mt-12">
+        <button class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">←</button>
+        <button class="px-4 py-2 rounded-lg" style="background-color: var(--color-primary); color: white; font-weight: 600;">1</button>
+        <button class="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">2</button>
+        <button class="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">3</button>
+        <button class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">→</button>
+    </div>
+</div>
