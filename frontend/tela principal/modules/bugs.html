@@ -31,15 +31,15 @@
     <!-- Filtros e Busca -->
     <div class="flex flex-col md:flex-row gap-4 mb-10">
         <div class="relative flex-1">
-            <input type="text" placeholder="Buscar por título, linguagem ou empresa..." 
+            <input type="text" id="searchInput" placeholder="Buscar por título, linguagem ou empresa..." 
                 class="w-full py-3 pl-12 pr-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500/30 transition"
                 style="border-color: rgba(233, 30, 99, 0.2); background-color: #2D2D2D;">
             <svg class="icon absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" viewBox="0 0 24 24">
                 <path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM21.5 21.5L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
             </svg>
         </div>
-        <button class="px-6 py-3 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Filtrar</button>
-        <button class="px-6 py-3 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Baixar</button>
+        <button onclick="filterBugs()" class="px-6 py-3 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Filtrar</button>
+        <button onclick="searchBugs()" class="px-6 py-3 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Pesquisar</button>
     </div>
 
     <!-- Grid de Bugs -->
@@ -384,4 +384,65 @@
 
     // Renderizar bugs ao carregar
     renderBugs();
+
+    function searchBugs() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        if (!searchTerm) {
+            alert('Por favor, digite algo para pesquisar');
+            return;
+        }
+        
+        const results = bugsData.filter(bug => 
+            bug.title.toLowerCase().includes(searchTerm) ||
+            bug.company.toLowerCase().includes(searchTerm) ||
+            bug.language.toLowerCase().includes(searchTerm)
+        );
+
+        if (results.length === 0) {
+            document.getElementById('bugs-container').innerHTML = `
+                <div class="p-6 rounded-lg col-span-full text-center" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                    <p class="text-gray-400">Nenhum bug encontrado para "<strong>${searchTerm}</strong>"</p>
+                </div>
+            `;
+            document.getElementById('pagination-container').innerHTML = '';
+        } else {
+            let html = '';
+            results.forEach(bug => {
+                html += `
+                    <div class="p-6 rounded-lg transition-all hover:shadow-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-14 h-14 rounded-lg ${getColorBg(bug.color)} flex items-center justify-center text-white font-bold text-lg">BUG</div>
+                                <div>
+                                    <h3 class="font-bold text-lg">${bug.title}</h3>
+                                    <p class="text-sm text-gray-500">${bug.company}</p>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: ${getDifficultyBgColor(bug.difficulty)}; color: ${getDifficultyColor(bug.difficulty)};">${bug.difficulty}</span>
+                        </div>
+                        <div class="space-y-2 mb-4 text-sm">
+                            <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>${bug.language}</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">${bug.reward}</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>${bug.attempts}</span></div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
+                            <button class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Resolver</button>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('bugs-container').innerHTML = html;
+            document.getElementById('pagination-container').innerHTML = `
+                <button onclick="renderBugs()" class="px-6 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Voltar</button>
+                <p class="text-gray-400">${results.length} resultado(s) encontrado(s)</p>
+            `;
+        }
+    }
+
+    function filterBugs() {
+        // Resetar para exibição normal
+        currentPage = 1;
+        renderBugs();
+    }
 </script>
