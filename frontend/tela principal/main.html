@@ -32,31 +32,6 @@
             color: white;
         }
 
-        .content-section {
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .candidate-card {
-            transition: all 0.25s ease;
-            border-radius: 10px;
-        }
-
-        .candidate-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 24px rgba(233, 30, 99, 0.15);
-            border-color: rgba(233, 30, 99, 0.3);
-        }
-
         .btn-hover {
             transition: all 0.2s ease;
         }
@@ -78,6 +53,15 @@
             border-color: rgba(233, 30, 99, 0.4);
             background: linear-gradient(135deg, rgba(233, 30, 99, 0.15), rgba(255, 20, 147, 0.1));
         }
+
+        #main-content {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 
@@ -98,14 +82,14 @@
 
             <!-- Menu Items -->
             <nav class="flex-1 px-4 py-6 space-y-2">
-                <button onclick="showSection('bugs')" class="nav-item nav-item-active w-full flex items-center px-4 py-3 rounded-lg transition duration-200" style="background-color: var(--color-primary);">
+                <button onclick="loadSection('bugs')" class="nav-item nav-item-active w-full flex items-center px-4 py-3 rounded-lg transition duration-200" style="background-color: var(--color-primary);">
                     <svg class="icon text-white mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <path d="M12 2L2 12H5.09C5.39 15.11 7.23 18.04 10.02 19.46L12 21.36L13.98 19.46C16.77 18.04 18.61 15.11 18.91 12H22L12 2Z" fill="currentColor"/>
                     </svg>
                     <span class="text-sm font-semibold">Bugs para Resolver</span>
                 </button>
 
-                <button onclick="showSection('pagamentos')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
+                <button onclick="loadSection('pagamentos')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
                     <svg class="icon text-gray-500 mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
                         <path d="M1 9h22" stroke="currentColor" stroke-width="2" fill="none"/>
@@ -113,7 +97,7 @@
                     <span class="text-sm">Pagamentos</span>
                 </button>
 
-                <button onclick="showSection('configuracoes')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
+                <button onclick="loadSection('configuracoes')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
                     <svg class="icon text-gray-500 mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
                         <circle cx="12" cy="19" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
@@ -123,7 +107,7 @@
                     <span class="text-sm">Configurações</span>
                 </button>
 
-                <button onclick="showSection('perfil')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
+                <button onclick="loadSection('perfil')" class="nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-100 hover:text-white hover:bg-gray-900 transition duration-200">
                     <svg class="icon text-gray-500 mr-3 w-5 h-5" viewBox="0 0 24 24">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                         <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -146,10 +130,8 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto bg-gradient-to-b from-gray-900 to-black p-8">
-
-            <!-- ===== SEÇÃO: BUGS PARA RESOLVER ===== -->
-            <section id="bugs" class="content-section active">
+        <main class="flex-1 overflow-y-auto bg-gradient-to-b from-gray-900 to-black p-8" id="main-content">
+            <!-- Conteúdo será carregado aqui via JavaScript -->
                 <div class="mb-10">
                     <h1 class="text-4xl font-bold mb-3">Bugs para Resolver</h1>
                     <p class="text-gray-500">Bugs enviados por empresas para a comunidade resolver</p>
@@ -439,16 +421,29 @@
     </div>
 
     <script>
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(s => s.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => item.classList.remove('nav-item-active'));
-            event.target.closest('.nav-item').classList.add('nav-item-active');
+        // Carrega o conteúdo de um módulo
+        async function loadSection(sectionName) {
+            try {
+                const response = await fetch(`modules/${sectionName}.html`);
+                const html = await response.text();
+                document.getElementById('main-content').innerHTML = html;
+                
+                // Atualizar botão ativo na sidebar
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => item.classList.remove('nav-item-active'));
+                event.target.closest('.nav-item').classList.add('nav-item-active');
+            } catch (error) {
+                console.error('Erro ao carregar módulo:', error);
+                document.getElementById('main-content').innerHTML = '<p class="text-red-500">Erro ao carregar conteúdo</p>';
+            }
         }
+
+        // Carregar seção padrão ao iniciar
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSection('bugs');
+        });
     </script>
 
 </body>
 </html>
+
