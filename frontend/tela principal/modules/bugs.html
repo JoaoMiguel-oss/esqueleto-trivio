@@ -43,7 +43,7 @@
     </div>
 
     <!-- Grid de Bugs -->
-    <div class="grid grid-cols-1 gap-6">
+    <div class="grid grid-cols-1 gap-6" id="bugs-container">
         <!-- Card 1 -->
         <div class="p-6 rounded-lg transition-all hover:shadow-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
             <div class="flex items-start justify-between mb-4">
@@ -180,15 +180,208 @@
                 <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
                 <button class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Resolver</button>
             </div>
-        </div>
-    </div>
-
     <!-- Paginação -->
-    <div class="flex justify-center items-center gap-2 mt-12">
-        <button class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">←</button>
-        <button class="px-4 py-2 rounded-lg" style="background-color: var(--color-primary); color: white; font-weight: 600;">1</button>
-        <button class="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">2</button>
-        <button class="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">3</button>
-        <button class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">→</button>
+    <div class="flex justify-center items-center gap-2 mt-12" id="pagination-container">
+        <button onclick="previousPage()" class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">←</button>
+        <!-- Números serão adicionados via JavaScript -->
+        <button onclick="nextPage()" class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">→</button>
     </div>
 </div>
+
+<script>
+    // Dados dos bugs
+    const bugsData = [
+        {
+            title: "Login não funciona",
+            company: "Google Workspace",
+            difficulty: "Alto",
+            language: "JavaScript/React",
+            reward: "R$ 500",
+            attempts: "3 pessoas",
+            color: "red"
+        },
+        {
+            title: "Botão Save não envia",
+            company: "Shopify",
+            difficulty: "Médio",
+            language: "Python/Django",
+            reward: "R$ 350",
+            attempts: "1 pessoa",
+            color: "yellow"
+        },
+        {
+            title: "API timeout aleatório",
+            company: "Netflix Clone",
+            difficulty: "Baixo",
+            language: "Node.js/Express",
+            reward: "R$ 250",
+            attempts: "5 pessoas",
+            color: "blue"
+        },
+        {
+            title: "CSS responsivo quebrado",
+            company: "E-commerce XYZ",
+            difficulty: "Alto",
+            language: "HTML/CSS/Vue",
+            reward: "R$ 400",
+            attempts: "2 pessoas",
+            color: "red"
+        },
+        {
+            title: "Validação de email",
+            company: "SaaS Platform",
+            difficulty: "Médio",
+            language: "Java/Spring Boot",
+            reward: "R$ 300",
+            attempts: "4 pessoas",
+            color: "yellow"
+        },
+        {
+            title: "Erro ao fazer upload",
+            company: "Cloud Storage App",
+            difficulty: "Baixo",
+            language: "PHP/Laravel",
+            reward: "R$ 280",
+            attempts: "6 pessoas",
+            color: "blue"
+        },
+        {
+            title: "Cache não invalida",
+            company: "Banco de Dados App",
+            difficulty: "Médio",
+            language: "C#/.NET",
+            reward: "R$ 450",
+            attempts: "2 pessoas",
+            color: "yellow"
+        },
+        {
+            title: "Memory leak em produção",
+            company: "Analytics Platform",
+            difficulty: "Alto",
+            language: "Go/Rust",
+            reward: "R$ 600",
+            attempts: "1 pessoa",
+            color: "red"
+        },
+        {
+            title: "Segurança SQL Injection",
+            company: "Social Network",
+            difficulty: "Alto",
+            language: "SQL/PHP",
+            reward: "R$ 750",
+            attempts: "0 pessoas",
+            color: "red"
+        }
+    ];
+
+    const BUGS_PER_PAGE = 3;
+    let currentPage = 1;
+
+    function getDifficultyColor(difficulty) {
+        const colors = {
+            "Alto": "#DC2626",
+            "Médio": "#D97706",
+            "Baixo": "#3B82F6"
+        };
+        return colors[difficulty] || "#666";
+    }
+
+    function getDifficultyBgColor(difficulty) {
+        const colors = {
+            "Alto": "rgba(220, 38, 38, 0.2)",
+            "Médio": "rgba(217, 119, 6, 0.2)",
+            "Baixo": "rgba(59, 130, 246, 0.2)"
+        };
+        return colors[difficulty] || "rgba(100, 100, 100, 0.2)";
+    }
+
+    function getColorBg(color) {
+        const colors = {
+            "red": "bg-red-900",
+            "yellow": "bg-yellow-900",
+            "blue": "bg-blue-900"
+        };
+        return colors[color] || "bg-gray-900";
+    }
+
+    function renderBugs() {
+        const startIndex = (currentPage - 1) * BUGS_PER_PAGE;
+        const endIndex = startIndex + BUGS_PER_PAGE;
+        const bugsToShow = bugsData.slice(startIndex, endIndex);
+
+        let html = '';
+        bugsToShow.forEach(bug => {
+            html += `
+                <div class="p-6 rounded-lg transition-all hover:shadow-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-14 h-14 rounded-lg ${getColorBg(bug.color)} flex items-center justify-center text-white font-bold text-lg">BUG</div>
+                            <div>
+                                <h3 class="font-bold text-lg">${bug.title}</h3>
+                                <p class="text-sm text-gray-500">${bug.company}</p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: ${getDifficultyBgColor(bug.difficulty)}; color: ${getDifficultyColor(bug.difficulty)};">${bug.difficulty}</span>
+                    </div>
+                    <div class="space-y-2 mb-4 text-sm">
+                        <div class="flex justify-between"><span class="text-gray-500">Linguagem:</span><span>${bug.language}</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">${bug.reward}</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>${bug.attempts}</span></div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
+                        <button class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Resolver</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById('bugs-container').innerHTML = html;
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const totalPages = Math.ceil(bugsData.length / BUGS_PER_PAGE);
+        const paginationContainer = document.getElementById('pagination-container');
+        
+        let html = '<button onclick="previousPage()" class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">←</button>';
+        
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === currentPage) {
+                html += `<button onclick="goToPage(${i})" class="px-4 py-2 rounded-lg" style="background-color: var(--color-primary); color: white; font-weight: 600;">${i}</button>`;
+            } else {
+                html += `<button onclick="goToPage(${i})" class="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">${i}</button>`;
+            }
+        }
+        
+        html += '<button onclick="nextPage()" class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">→</button>';
+        
+        paginationContainer.innerHTML = html;
+    }
+
+    function goToPage(page) {
+        const totalPages = Math.ceil(bugsData.length / BUGS_PER_PAGE);
+        if (page >= 1 && page <= totalPages) {
+            currentPage = page;
+            renderBugs();
+        }
+    }
+
+    function nextPage() {
+        const totalPages = Math.ceil(bugsData.length / BUGS_PER_PAGE);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderBugs();
+        }
+    }
+
+    function previousPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            renderBugs();
+        }
+    }
+
+    // Renderizar bugs ao carregar
+    renderBugs();
+</script>
