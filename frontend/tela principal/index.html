@@ -424,7 +424,8 @@
         // Carrega o conteúdo de um módulo
         async function loadSection(sectionName) {
             try {
-                const response = await fetch(`modules/${sectionName}.html`);
+                const response = await fetch(`./modules/${sectionName}.html`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const html = await response.text();
                 document.getElementById('main-content').innerHTML = html;
                 
@@ -433,8 +434,14 @@
                 navItems.forEach(item => item.classList.remove('nav-item-active'));
                 event.target.closest('.nav-item').classList.add('nav-item-active');
             } catch (error) {
-                console.error('Erro ao carregar módulo:', error);
-                document.getElementById('main-content').innerHTML = '<p class="text-red-500">Erro ao carregar conteúdo</p>';
+                console.error(`Erro ao carregar módulo ${sectionName}:`, error);
+                document.getElementById('main-content').innerHTML = `
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface);">
+                        <p class="text-red-400 font-semibold mb-2">⚠️ Erro ao carregar conteúdo</p>
+                        <p class="text-sm text-gray-400">Verifique se os arquivos estão em: tela principal/modules/${sectionName}.html</p>
+                        <p class="text-xs text-gray-500 mt-2">Erro: ${error.message}</p>
+                    </div>
+                `;
             }
         }
 
