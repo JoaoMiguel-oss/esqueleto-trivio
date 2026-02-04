@@ -42,8 +42,8 @@
         <button onclick="searchBugs()" class="px-6 py-3 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Pesquisar</button>
     </div>
 
-    <!-- Grid de Bugs -->
-    <div class="grid grid-cols-1 gap-6" id="bugs-container">
+    <!-- Container para renderizar bugs dinamicamente -->
+    <div class="grid grid-cols-1 gap-6 mb-8" id="bugs-container">
         <!-- Card 1 -->
         <div class="p-6 rounded-lg transition-all hover:shadow-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
             <div class="flex items-start justify-between mb-4">
@@ -370,7 +370,8 @@
         const bugsToShow = bugsData.slice(startIndex, endIndex);
 
         let html = '';
-        bugsToShow.forEach(bug => {
+        bugsToShow.forEach((bug, i) => {
+            const globalIndex = startIndex + i;
             html += `
                 <div class="p-6 rounded-lg transition-all hover:shadow-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
                     <div class="flex items-start justify-between mb-4">
@@ -380,7 +381,7 @@
                                 <h3 class="font-bold text-lg">${bug.title}</h3>
                                 <p class="text-sm text-gray-500">${bug.company}</p>
                             </div>
-                        <button onclick="showDetails(${index})" class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
+                        </div>
                         <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: ${getDifficultyBgColor(bug.difficulty)}; color: ${getDifficultyColor(bug.difficulty)};">${bug.difficulty}</span>
                     </div>
                     <div class="space-y-2 mb-4 text-sm">
@@ -389,7 +390,7 @@
                         <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>${bug.attempts}</span></div>
                     </div>
                     <div class="flex gap-2">
-                        <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
+                        <button onclick="showDetails(${globalIndex})" class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
                         <button class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Resolver</button>
                     </div>
                 </div>
