@@ -176,20 +176,71 @@
                 <div class="flex justify-between"><span class="text-gray-500">Recompensa:</span><span style="color: var(--color-accent); font-weight: bold;">R$ 280</span></div>
                 <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>6 pessoas</span></div>
             </div>
-            <div class="flex gap-2">
-                <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
-                <button class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Resolver</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Container para renderizar bugs dinamicamente -->
+    <div id="bugs-container" class="grid grid-cols-1 gap-4 mb-8"></div>
+
     <!-- Paginação -->
     <div class="flex justify-center items-center gap-2 mt-12" id="pagination-container">
         <button onclick="previousPage()" class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">←</button>
         <!-- Números serão adicionados via JavaScript -->
         <button onclick="nextPage()" class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">→</button>
     </div>
+
+    <!-- Modal de Detalhes -->
+    <div id="detailsModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div class="bg-gray-900 rounded-lg max-w-2xl w-full max-h-96 overflow-y-auto" style="background-color: var(--color-surface);">
+            <div class="p-8">
+                <div class="flex items-start justify-between mb-6">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-2" id="modalTitle">Título do Bug</h2>
+                        <p class="text-gray-400" id="modalCompany">Empresa</p>
+                    </div>
+                    <button onclick="closeDetails()" class="text-gray-400 hover:text-white text-2xl">✕</button>
+                </div>
+
+                <div class="space-y-4 mb-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-gray-500 text-sm mb-1">Dificuldade</p>
+                            <p class="font-semibold text-lg" id="modalDifficulty">Alto</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm mb-1">Linguagem/Stack</p>
+                            <p class="font-semibold text-lg" id="modalLanguage">JavaScript/React</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm mb-1">Recompensa</p>
+                            <p class="font-semibold text-lg" style="color: var(--color-accent);" id="modalReward">R$ 500</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm mb-1">Tentativas</p>
+                            <p class="font-semibold text-lg" id="modalAttempts">3 pessoas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-700 pt-6">
+                    <h3 class="font-bold text-lg mb-3">Descrição do Bug</h3>
+                    <p class="text-gray-300 mb-6" id="modalDescription">
+                        Descrição detalhada do bug será exibida aqui...
+                    </p>
+                </div>
+
+                <div class="flex gap-3">
+                    <button onclick="closeDetails()" class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Fechar</button>
+                    <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Resolver Bug</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    // Dados dos bugs
+    // Dados dos bugs com descrições
     const bugsData = [
         {
             title: "Login não funciona",
@@ -198,7 +249,8 @@
             language: "JavaScript/React",
             reward: "R$ 500",
             attempts: "3 pessoas",
-            color: "red"
+            color: "red",
+            description: "O sistema de login não está autenticando usuários. Quando o usuário tenta fazer login com credenciais válidas, ele recebe erro 403. O problema parece estar na integração com o OAuth do Google Workspace. É necessário revisar o fluxo de autenticação e debugar os tokens JWT."
         },
         {
             title: "Botão Save não envia",
@@ -207,7 +259,8 @@
             language: "Python/Django",
             reward: "R$ 350",
             attempts: "1 pessoa",
-            color: "yellow"
+            color: "yellow",
+            description: "O botão de salvar dados no formulário de produtos não está enviando as informações para o servidor. A requisição AJAX não está sendo realizada corretamente. Verifique o listeners do evento click e valide se os dados estão sendo capturados corretamente."
         },
         {
             title: "API timeout aleatório",
@@ -216,7 +269,8 @@
             language: "Node.js/Express",
             reward: "R$ 250",
             attempts: "5 pessoas",
-            color: "blue"
+            color: "blue",
+            description: "A API está retornando timeout em requisições aleatórias. O problema ocorre principalmente durante picos de tráfego. É necessário otimizar as queries do banco de dados, implementar cache e revisar a configuração do pool de conexões."
         },
         {
             title: "CSS responsivo quebrado",
@@ -225,7 +279,8 @@
             language: "HTML/CSS/Vue",
             reward: "R$ 400",
             attempts: "2 pessoas",
-            color: "red"
+            color: "red",
+            description: "O layout responsivo não está funcionando corretamente em dispositivos móveis menores que 320px. Os elementos estão se sobrepondo e o menu não aparece. Revise os media queries e os valores de breakpoint do Tailwind CSS."
         },
         {
             title: "Validação de email",
@@ -234,7 +289,8 @@
             language: "Java/Spring Boot",
             reward: "R$ 300",
             attempts: "4 pessoas",
-            color: "yellow"
+            color: "yellow",
+            description: "A validação de email não está aceitando endereços válidos com certos domínios. Alguns emails com caracteres especiais também estão sendo rejeitados incorretamente. Melhore a regex de validação ou use uma biblioteca dedicada."
         },
         {
             title: "Erro ao fazer upload",
@@ -243,7 +299,8 @@
             language: "PHP/Laravel",
             reward: "R$ 280",
             attempts: "6 pessoas",
-            color: "blue"
+            color: "blue",
+            description: "O upload de arquivos está falhando para arquivos maiores que 50MB. O sistema retorna erro 413. Configure o limite de upload no servidor e implemente upload chunked para arquivos grandes."
         },
         {
             title: "Cache não invalida",
@@ -252,7 +309,8 @@
             language: "C#/.NET",
             reward: "R$ 450",
             attempts: "2 pessoas",
-            color: "yellow"
+            color: "yellow",
+            description: "Os dados em cache não estão sendo invalidados quando registros são atualizados. Usuários veem dados desatualizados. Implemente cache invalidation automática ou use TTL apropriado nos tokens de cache."
         },
         {
             title: "Memory leak em produção",
@@ -261,7 +319,8 @@
             language: "Go/Rust",
             reward: "R$ 600",
             attempts: "1 pessoa",
-            color: "red"
+            color: "red",
+            description: "O aplicativo está consumindo cada vez mais memória e eventualmente cai. Memory profilers indicam um vazamento em handlers de eventos. Procure por listeners não removidos e referências circulares."
         },
         {
             title: "Segurança SQL Injection",
@@ -270,7 +329,8 @@
             language: "SQL/PHP",
             reward: "R$ 750",
             attempts: "0 pessoas",
-            color: "red"
+            color: "red",
+            description: "Vulnerabilidade crítica de SQL Injection detectada na página de pesquisa de usuários. Use prepared statements ou ORM para sanitizar todas as inputs do usuário. Isso é uma prioridade de segurança."
         }
     ];
 
@@ -320,7 +380,7 @@
                                 <h3 class="font-bold text-lg">${bug.title}</h3>
                                 <p class="text-sm text-gray-500">${bug.company}</p>
                             </div>
-                        </div>
+                        <button onclick="showDetails(${index})" class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
                         <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: ${getDifficultyBgColor(bug.difficulty)}; color: ${getDifficultyColor(bug.difficulty)};">${bug.difficulty}</span>
                     </div>
                     <div class="space-y-2 mb-4 text-sm">
@@ -408,6 +468,7 @@
         } else {
             let html = '';
             results.forEach(bug => {
+                const globalIndex = bugsData.indexOf(bug);
                 html += `
                     <div class="p-6 rounded-lg transition-all hover:shadow-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
                         <div class="flex items-start justify-between mb-4">
@@ -426,7 +487,7 @@
                             <div class="flex justify-between"><span class="text-gray-500">Tentativas:</span><span>${bug.attempts}</span></div>
                         </div>
                         <div class="flex gap-2">
-                            <button class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
+                            <button onclick="showDetails(${globalIndex})" class="flex-1 py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Ver Detalhes</button>
                             <button class="flex-1 py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Resolver</button>
                         </div>
                     </div>
@@ -444,5 +505,21 @@
         // Resetar para exibição normal
         currentPage = 1;
         renderBugs();
+    }
+
+    function showDetails(index) {
+        const bug = bugsData[index];
+        document.getElementById('modalTitle').textContent = bug.title;
+        document.getElementById('modalCompany').textContent = bug.company;
+        document.getElementById('modalDifficulty').textContent = bug.difficulty;
+        document.getElementById('modalLanguage').textContent = bug.language;
+        document.getElementById('modalReward').textContent = bug.reward;
+        document.getElementById('modalAttempts').textContent = bug.attempts;
+        document.getElementById('modalDescription').textContent = bug.description;
+        document.getElementById('detailsModal').classList.remove('hidden');
+    }
+
+    function closeDetails() {
+        document.getElementById('detailsModal').classList.add('hidden');
     }
 </script>
