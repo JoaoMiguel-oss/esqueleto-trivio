@@ -1,28 +1,642 @@
-<div>
-    <h1 class="text-4xl font-bold mb-3">Configurações</h1>
-    <p class="text-gray-500 mb-8">Personalize suas preferências</p>
+<!-- ===== ESTRUTURA DE CONFIGURAÇÕES COM SIDEBAR ===== -->
+<!-- Layout: Sidebar à esquerda com menu de configurações + Conteúdo à direita -->
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
-            <h3 class="text-xl font-bold mb-4">Preferências Gerais</h3>
-            <div class="space-y-4">
-                <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" checked class="w-4 h-4">
-                    <span class="text-sm">Notificações por Email</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="checkbox" checked class="w-4 h-4">
-                    <span class="text-sm">Modo Escuro</span>
-                </label>
+<div class="flex h-full" id="settings-wrapper">
+    
+    <!-- ===== OVERLAY DE FUNDO (apenas mobile) ===== -->
+    <!-- Fundo escuro que aparece quando sidebar está aberta no mobile -->
+    <div class="settings-overlay" id="settings-overlay" onclick="toggleSettingsSidebar()"></div>
+
+    <!-- ===== SIDEBAR DE CONFIGURAÇÕES (ESQUERDA) ===== -->
+    <!-- Menu lateral com opções de configuração -->
+    <aside class="settings-sidebar bg-gray-950 border-r border-gray-800 flex flex-col" style="width: 280px; min-height: calc(100vh - 73px);">
+        
+        <!-- Cabeçalho da Sidebar -->
+        <div class="p-6 border-b border-gray-800">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold text-white">Configurações</h2>
+                <!-- Botão fechar (apenas mobile) -->
+                <button onclick="toggleSettingsSidebar()" class="show-mobile text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
+            <p class="text-sm text-gray-500 mt-1">Gerencie suas preferências</p>
         </div>
 
-        <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
-            <h3 class="text-xl font-bold mb-4">Segurança</h3>
-            <div class="space-y-3">
-                <button class="w-full py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Alterar Senha</button>
-                <button class="w-full py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Autenticação de Dois Fatores</button>
-            </div>
+        <!-- Menu de Opções de Configuração -->
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            
+            <!-- Opção: Perfil -->
+            <button 
+                onclick="loadSettingsTab('perfil', this)" 
+                class="settings-nav-item settings-nav-active w-full flex items-center px-4 py-3 rounded-lg transition duration-200"
+                style="background-color: var(--color-primary);">
+                <!-- Ícone de usuário -->
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+                <span class="text-sm font-semibold">Perfil</span>
+            </button>
+
+            <!-- Opção: Informações Pessoais -->
+            <button 
+                onclick="loadSettingsTab('info-pessoais', this)" 
+                class="settings-nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-900 transition duration-200">
+                <!-- Ícone de documento/ID -->
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
+                </svg>
+                <span class="text-sm">Informações Pessoais</span>
+            </button>
+
+            <!-- Opção: Segurança -->
+            <button 
+                onclick="loadSettingsTab('seguranca', this)" 
+                class="settings-nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-900 transition duration-200">
+                <!-- Ícone de cadeado -->
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+                <span class="text-sm">Segurança</span>
+            </button>
+
+            <!-- Opção: Notificações -->
+            <button 
+                onclick="loadSettingsTab('notificacoes', this)" 
+                class="settings-nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-900 transition duration-200">
+                <!-- Ícone de sino -->
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                </svg>
+                <span class="text-sm">Notificações</span>
+            </button>
+
+            <!-- Opção: Privacidade -->
+            <button 
+                onclick="loadSettingsTab('privacidade', this)" 
+                class="settings-nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-900 transition duration-200">
+                <!-- Ícone de escudo -->
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+                <span class="text-sm">Privacidade</span>
+            </button>
+
+            <!-- Opção: Aparência -->
+            <button 
+                onclick="loadSettingsTab('aparencia', this)" 
+                class="settings-nav-item w-full flex items-center px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-gray-900 transition duration-200">
+                <!-- Ícone de paleta -->
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+                <span class="text-sm">Aparência</span>
+            </button>
+
+        </nav>
+
+        <!-- Rodapé da Sidebar -->
+        <div class="p-4 border-t border-gray-800">
+            <button class="w-full px-4 py-2 rounded-lg border border-gray-600 text-sm text-gray-300 hover:border-gray-400 hover:text-white transition">
+                Restaurar Padrões
+            </button>
+        </div>
+    </aside>
+
+    <!-- ===== ÁREA DE CONTEÚDO (DIREITA) ===== -->
+    <!-- Conteúdo dinâmico baseado na aba selecionada -->
+    <div class="flex-1 overflow-y-auto p-8" id="settings-content-area">
+        
+        <!-- Botão Toggle Sidebar (apenas mobile) -->
+        <button onclick="toggleSettingsSidebar()" class="settings-toggle show-mobile mb-4 px-4 py-2 rounded-lg flex items-center gap-2" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.1);">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <span class="text-sm">Menu de Configurações</span>
+        </button>
+
+        <!-- Conteúdo será injetado aqui via JavaScript -->
+        <div id="settings-tab-content">
+            <!-- Conteúdo padrão: Perfil -->
         </div>
     </div>
+
 </div>
+
+<!-- ===== ESTILOS ESPECÍFICOS PARA CONFIGURAÇÕES ===== -->
+<style>
+    /* Estilo para item de navegação ativo na sidebar de configurações */
+    .settings-nav-active {
+        background-color: var(--color-primary) !important;
+        color: white !important;
+    }
+
+    /* Esconde elementos por padrão */
+    .settings-toggle {
+        display: none;
+    }
+
+    /* Container do wrapper de configurações */
+    #settings-wrapper {
+        position: relative;
+        min-height: calc(100vh - 73px);
+    }
+</style>
+
+<!-- ===== JAVASCRIPT PARA GERENCIAR ABAS DE CONFIGURAÇÕES ===== -->
+<script>
+    /**
+     * Conteúdo das abas de configuração
+     * Cada aba tem seu próprio HTML
+     */
+    const settingsTabs = {
+        
+        // ===== ABA: PERFIL =====
+        'perfil': `
+            <div>
+                <h1 class="text-4xl font-bold mb-3">Perfil</h1>
+                <p class="text-gray-500 mb-8">Gerencie suas informações de perfil público</p>
+
+                <div class="max-w-3xl p-8 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
+                        <div class="relative">
+                            <img class="w-24 h-24 rounded-lg object-cover" src="https://placehold.co/100x100/E91E63/FFFFFF?text=AD" alt="Avatar">
+                            <button class="absolute bottom-0 right-0 w-8 h-8 rounded-full flex items-center justify-center" style="background-color: var(--color-primary);">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-1">Admin User</h3>
+                            <p class="text-gray-500 mb-3">@adminuser • Membro desde Jan 2024</p>
+                            <button class="px-4 py-2 rounded-lg text-sm font-semibold border-2 transition" style="border-color: var(--color-accent); color: var(--color-accent);">
+                                Alterar Foto
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Nome</label>
+                                <input type="text" value="Admin" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Sobrenome</label>
+                                <input type="text" value="User" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Nome de usuário</label>
+                            <input type="text" value="adminuser" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Bio</label>
+                            <textarea rows="3" placeholder="Conte um pouco sobre você..." class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition"></textarea>
+                        </div>
+                        <div class="flex gap-4 pt-4">
+                            <button class="flex-1 py-2 rounded-lg font-bold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Salvar Alterações</button>
+                            <button class="flex-1 py-2 rounded-lg font-bold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `,
+
+        // ===== ABA: INFORMAÇÕES PESSOAIS =====
+        'info-pessoais': `
+            <div>
+                <h1 class="text-4xl font-bold mb-3">Informações Pessoais</h1>
+                <p class="text-gray-500 mb-8">Dados pessoais e informações de contato</p>
+
+                <div class="max-w-3xl space-y-6">
+                    <!-- Card: Contato -->
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <h3 class="text-xl font-bold mb-4">Informações de Contato</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">E-mail Principal</label>
+                                <input type="email" value="admin@trivio.com" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">E-mail Secundário</label>
+                                <input type="email" placeholder="email.secundario@exemplo.com" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold mb-2">Telefone</label>
+                                    <input type="tel" value="(11) 99999-9999" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold mb-2">Telefone Alternativo</label>
+                                    <input type="tel" placeholder="(11) 98888-8888" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Endereço -->
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <h3 class="text-xl font-bold mb-4">Endereço</h3>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-semibold mb-2">Rua</label>
+                                    <input type="text" placeholder="Nome da rua" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold mb-2">Número</label>
+                                    <input type="text" placeholder="123" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold mb-2">Cidade</label>
+                                    <input type="text" placeholder="São Paulo" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold mb-2">Estado</label>
+                                    <input type="text" placeholder="SP" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold mb-2">CEP</label>
+                                    <input type="text" placeholder="00000-000" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold mb-2">País</label>
+                                    <input type="text" value="Brasil" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botões de Ação -->
+                    <div class="flex gap-4">
+                        <button class="flex-1 py-3 rounded-lg font-bold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Salvar Informações</button>
+                        <button class="flex-1 py-3 rounded-lg font-bold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        `,
+
+        // ===== ABA: SEGURANÇA =====
+        'seguranca': `
+            <div>
+                <h1 class="text-4xl font-bold mb-3">Segurança</h1>
+                <p class="text-gray-500 mb-8">Proteja sua conta com configurações de segurança avançadas</p>
+
+                <div class="max-w-3xl space-y-6">
+                    <!-- Card: Alterar Senha -->
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <h3 class="text-xl font-bold mb-4">Alterar Senha</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Senha Atual</label>
+                                <input type="password" placeholder="••••••••" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Nova Senha</label>
+                                <input type="password" placeholder="••••••••" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Confirmar Nova Senha</label>
+                                <input type="password" placeholder="••••••••" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                            </div>
+                            <button class="w-full py-2 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Atualizar Senha</button>
+                        </div>
+                    </div>
+
+                    <!-- Card: Autenticação de Dois Fatores -->
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold">Autenticação de Dois Fatores (2FA)</h3>
+                                <p class="text-sm text-gray-400 mt-1">Adicione uma camada extra de segurança</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-lg text-xs font-semibold" style="background-color: rgba(239, 68, 68, 0.2); color: #EF4444;">Desativado</span>
+                        </div>
+                        <button class="w-full py-2 rounded-lg font-semibold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Ativar 2FA</button>
+                    </div>
+
+                    <!-- Card: Sessões Ativas -->
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <h3 class="text-xl font-bold mb-4">Sessões Ativas</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 rounded-lg bg-gray-900">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                    <div>
+                                        <p class="text-sm font-semibold">Windows • Chrome</p>
+                                        <p class="text-xs text-gray-500">São Paulo, Brasil • Sessão atual</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-green-400">Ativo agora</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 rounded-lg bg-gray-900">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                    </svg>
+                                    <div>
+                                        <p class="text-sm font-semibold">iPhone • Safari</p>
+                                        <p class="text-xs text-gray-500">São Paulo, Brasil • 2 dias atrás</p>
+                                    </div>
+                                </div>
+                                <button class="text-xs text-red-400 hover:text-red-300">Encerrar</button>
+                            </div>
+                        </div>
+                        <button class="w-full mt-4 py-2 rounded-lg font-semibold border border-red-600 text-red-400 hover:bg-red-600 hover:text-white transition">
+                            Encerrar Todas as Sessões
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `,
+
+        // ===== ABA: NOTIFICAÇÕES =====
+        'notificacoes': `
+            <div>
+                <h1 class="text-4xl font-bold mb-3">Notificações</h1>
+                <p class="text-gray-500 mb-8">Gerencie como e quando você recebe notificações</p>
+
+                <div class="max-w-3xl space-y-6">
+                    <!-- Card: Notificações por E-mail -->
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <h3 class="text-xl font-bold mb-4">Notificações por E-mail</h3>
+                        <div class="space-y-4">
+                            <label class="flex items-center justify-between cursor-pointer p-3 rounded-lg hover:bg-gray-900 transition">
+                                <div>
+                                    <p class="font-semibold">Novos bugs disponíveis</p>
+                                    <p class="text-sm text-gray-500">Receba quando novos bugs forem publicados</p>
+                                </div>
+                                <input type="checkbox" checked class="w-5 h-5">
+                            </label>
+                            <label class="flex items-center justify-between cursor-pointer p-3 rounded-lg hover:bg-gray-900 transition">
+                                <div>
+                                    <p class="font-semibold">Atualizações de bugs</p>
+                                    <p class="text-sm text-gray-500">Notificações sobre bugs que você está resolvendo</p>
+                                </div>
+                                <input type="checkbox" checked class="w-5 h-5">
+                            </label>
+                            <label class="flex items-center justify-between cursor-pointer p-3 rounded-lg hover:bg-gray-900 transition">
+                                <div>
+                                    <p class="font-semibold">Newsletter semanal</p>
+                                    <p class="text-sm text-gray-500">Resumo semanal das atividades</p>
+                                </div>
+                                <input type="checkbox" class="w-5 h-5">
+                            </label>
+                            <label class="flex items-center justify-between cursor-pointer p-3 rounded-lg hover:bg-gray-900 transition">
+                                <div>
+                                    <p class="font-semibold">Promoções e ofertas</p>
+                                    <p class="text-sm text-gray-500">Receba ofertas especiais e promoções</p>
+                                </div>
+                                <input type="checkbox" class="w-5 h-5">
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Card: Notificações Push -->
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <h3 class="text-xl font-bold mb-4">Notificações Push</h3>
+                        <div class="space-y-4">
+                            <label class="flex items-center justify-between cursor-pointer p-3 rounded-lg hover:bg-gray-900 transition">
+                                <div>
+                                    <p class="font-semibold">Mensagens diretas</p>
+                                    <p class="text-sm text-gray-500">Quando alguém enviar uma mensagem</p>
+                                </div>
+                                <input type="checkbox" checked class="w-5 h-5">
+                            </label>
+                            <label class="flex items-center justify-between cursor-pointer p-3 rounded-lg hover:bg-gray-900 transition">
+                                <div>
+                                    <p class="font-semibold">Comentários</p>
+                                    <p class="text-sm text-gray-500">Quando alguém comentar em suas soluções</p>
+                                </div>
+                                <input type="checkbox" checked class="w-5 h-5">
+                            </label>
+                            <label class="flex items-center justify-between cursor-pointer p-3 rounded-lg hover:bg-gray-900 transition">
+                                <div>
+                                    <p class="font-semibold">Pagamentos</p>
+                                    <p class="text-sm text-gray-500">Notificações sobre pagamentos recebidos</p>
+                                </div>
+                                <input type="checkbox" checked class="w-5 h-5">
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Botões de Ação -->
+                    <div class="flex gap-4">
+                        <button class="flex-1 py-3 rounded-lg font-bold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Salvar Preferências</button>
+                        <button class="flex-1 py-3 rounded-lg font-bold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        `,
+
+        // ===== ABA: PRIVACIDADE =====
+        'privacidade': `
+            <div>
+                <h1 class="text-4xl font-bold mb-3">Privacidade</h1>
+                <p class="text-gray-500 mb-8">Controle quem pode ver suas informações</p>
+
+                <div class="max-w-3xl space-y-6">
+                    <!-- Card: Visibilidade do Perfil -->
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <h3 class="text-xl font-bold mb-4">Visibilidade do Perfil</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Quem pode ver seu perfil?</label>
+                                <select class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                                    <option>Todos</option>
+                                    <option>Apenas membros registrados</option>
+                                    <option>Apenas você</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Quem pode ver suas estatísticas?</label>
+                                <select class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+                                    <option>Todos</option>
+                                    <option>Apenas membros registrados</option>
+                                    <option>Apenas você</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Dados e Privacidade -->
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <h3 class="text-xl font-bold mb-4">Dados e Privacidade</h3>
+                        <div class="space-y-3">
+                            <button class="w-full py-3 px-4 rounded-lg text-left border border-gray-700 hover:border-gray-500 transition flex items-center justify-between">
+                                <span>Baixar seus dados</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                </svg>
+                            </button>
+                            <button class="w-full py-3 px-4 rounded-lg text-left border border-gray-700 hover:border-gray-500 transition flex items-center justify-between">
+                                <span>Ver política de privacidade</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card: Zona de Perigo -->
+                    <div class="p-6 rounded-lg border-2" style="background-color: rgba(220, 38, 38, 0.05); border-color: rgba(220, 38, 38, 0.3);">
+                        <h3 class="text-xl font-bold mb-2 text-red-400">Zona de Perigo</h3>
+                        <p class="text-sm text-gray-400 mb-4">Ações irreversíveis com sua conta</p>
+                        <div class="space-y-3">
+                            <button class="w-full py-3 rounded-lg font-semibold border-2 border-red-600 text-red-400 hover:bg-red-600 hover:text-white transition">
+                                Desativar Conta Temporariamente
+                            </button>
+                            <button class="w-full py-3 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 transition">
+                                Excluir Conta Permanentemente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `,
+
+        // ===== ABA: APARÊNCIA =====
+        'aparencia': `
+            <div>
+                <h1 class="text-4xl font-bold mb-3">Aparência</h1>
+                <p class="text-gray-500 mb-8">Personalize a aparência da plataforma</p>
+
+                <div class="max-w-3xl space-y-6">
+                    <!-- Card: Tema -->
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <h3 class="text-xl font-bold mb-4">Tema</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 rounded-lg border-2 cursor-pointer transition" style="border-color: var(--color-primary); background-color: rgba(233, 30, 99, 0.1);">
+                                <div class="w-full h-24 rounded-lg bg-gray-900 mb-3"></div>
+                                <p class="font-semibold text-center">Escuro</p>
+                                <p class="text-xs text-gray-500 text-center">Atual</p>
+                            </div>
+                            <div class="p-4 rounded-lg border-2 border-gray-700 cursor-pointer hover:border-gray-500 transition">
+                                <div class="w-full h-24 rounded-lg bg-white mb-3"></div>
+                                <p class="font-semibold text-center">Claro</p>
+                                <p class="text-xs text-gray-500 text-center">Em breve</p>
+                            </div>
+                            <div class="p-4 rounded-lg border-2 border-gray-700 cursor-pointer hover:border-gray-500 transition">
+                                <div class="w-full h-24 rounded-lg bg-gradient-to-br from-gray-900 to-white mb-3"></div>
+                                <p class="font-semibold text-center">Automático</p>
+                                <p class="text-xs text-gray-500 text-center">Sistema</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Cor de Destaque -->
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <h3 class="text-xl font-bold mb-4">Cor de Destaque</h3>
+                        <div class="grid grid-cols-4 md:grid-cols-8 gap-3">
+                            <div class="w-12 h-12 rounded-lg cursor-pointer border-2 border-white" style="background-color: #E91E63;"></div>
+                            <div class="w-12 h-12 rounded-lg cursor-pointer border-2 border-transparent hover:border-white" style="background-color: #9C27B0;"></div>
+                            <div class="w-12 h-12 rounded-lg cursor-pointer border-2 border-transparent hover:border-white" style="background-color: #3F51B5;"></div>
+                            <div class="w-12 h-12 rounded-lg cursor-pointer border-2 border-transparent hover:border-white" style="background-color: #2196F3;"></div>
+                            <div class="w-12 h-12 rounded-lg cursor-pointer border-2 border-transparent hover:border-white" style="background-color: #00BCD4;"></div>
+                            <div class="w-12 h-12 rounded-lg cursor-pointer border-2 border-transparent hover:border-white" style="background-color: #4CAF50;"></div>
+                            <div class="w-12 h-12 rounded-lg cursor-pointer border-2 border-transparent hover:border-white" style="background-color: #FF9800;"></div>
+                            <div class="w-12 h-12 rounded-lg cursor-pointer border-2 border-transparent hover:border-white" style="background-color: #F44336;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Preferências de Exibição -->
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+                        <h3 class="text-xl font-bold mb-4">Preferências de Exibição</h3>
+                        <div class="space-y-4">
+                            <label class="flex items-center justify-between cursor-pointer p-3 rounded-lg hover:bg-gray-900 transition">
+                                <div>
+                                    <p class="font-semibold">Animações</p>
+                                    <p class="text-sm text-gray-500">Desative para melhor performance</p>
+                                </div>
+                                <input type="checkbox" checked class="w-5 h-5">
+                            </label>
+                            <label class="flex items-center justify-between cursor-pointer p-3 rounded-lg hover:bg-gray-900 transition">
+                                <div>
+                                    <p class="font-semibold">Modo compacto</p>
+                                    <p class="text-sm text-gray-500">Reduza o espaçamento entre elementos</p>
+                                </div>
+                                <input type="checkbox" class="w-5 h-5">
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Botões de Ação -->
+                    <div class="flex gap-4">
+                        <button class="flex-1 py-3 rounded-lg font-bold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Salvar Preferências</button>
+                        <button class="flex-1 py-3 rounded-lg font-bold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Restaurar Padrão</button>
+                    </div>
+                </div>
+            </div>
+        `
+    };
+
+    /**
+     * Função: loadSettingsTab
+     * Descrição: Carrega uma aba específica de configurações
+     * 
+     * @param {string} tabName - Nome da aba a ser carregada
+     * @param {HTMLElement} buttonElement - Botão clicado (para atualizar estado ativo)
+     */
+    function loadSettingsTab(tabName, buttonElement) {
+        // Busca o conteúdo da aba
+        const content = settingsTabs[tabName];
+        
+        if (content) {
+            // Injeta o conteúdo na área de conteúdo
+            document.getElementById('settings-tab-content').innerHTML = content;
+            
+            // Atualiza estado visual dos botões
+            const navItems = document.querySelectorAll('.settings-nav-item');
+            navItems.forEach(item => item.classList.remove('settings-nav-active'));
+            buttonElement.classList.add('settings-nav-active');
+            buttonElement.style.backgroundColor = 'var(--color-primary)';
+            
+            navItems.forEach(item => {
+                if (item !== buttonElement) {
+                    item.style.backgroundColor = 'transparent';
+                }
+            });
+
+            // Fecha sidebar no mobile após selecionar
+            if (window.innerWidth <= 768) {
+                toggleSettingsSidebar();
+            }
+        }
+    }
+
+    /**
+     * Função: toggleSettingsSidebar
+     * Descrição: Abre/fecha a sidebar de configurações (mobile)
+     */
+    function toggleSettingsSidebar() {
+        const sidebar = document.querySelector('.settings-sidebar');
+        const overlay = document.getElementById('settings-overlay');
+        
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+    }
+
+    // Carrega a aba padrão ao iniciar (Perfil)
+    document.addEventListener('DOMContentLoaded', () => {
+        const perfilButton = document.querySelector('button[onclick*="perfil"]');
+        if (perfilButton) {
+            loadSettingsTab('perfil', perfilButton);
+        }
+    });
+
+    // Verifica se já está na página de configurações e carrega o conteúdo
+    const perfilButton = document.querySelector('button[onclick*="perfil"]');
+    if (perfilButton) {
+        loadSettingsTab('perfil', perfilButton);
+    }
+</script>

@@ -1,0 +1,280 @@
+/* ============================================
+   ARQUIVO DE RESPONSIVIDADE - TRIVIO
+   ============================================
+   Este arquivo contém todos os estilos responsivos
+   para adaptar o layout em diferentes tamanhos de tela
+   ============================================ */
+
+/* ===== VARIÁVEIS DE BREAKPOINTS ===== */
+/* 
+  Breakpoints utilizados:
+  - Mobile Small: até 640px
+  - Mobile: até 768px
+  - Tablet: 768px até 1024px
+  - Desktop: acima de 1024px
+*/
+
+/* ===== ESTILOS MOBILE (até 768px) ===== */
+@media (max-width: 768px) {
+    
+    /* ----- NAVBAR PRINCIPAL ----- */
+    /* Ajusta o espaçamento da navbar em telas pequenas */
+    .navbar {
+        padding: 12px 16px !important;
+    }
+
+    /* Logo reduzida no mobile */
+    .navbar .flex.items-center.gap-3 svg {
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    .navbar .flex.items-center.gap-3 span {
+        font-size: 16px !important;
+    }
+
+    /* ----- MENU DE NAVEGAÇÃO ----- */
+    /* Esconde os textos dos botões, mantém apenas ícones */
+    .nav-item-horizontal span {
+        display: none;
+    }
+
+    /* Reduz o padding dos botões de navegação */
+    .nav-item-horizontal {
+        padding: 8px 10px !important;
+    }
+
+    /* ----- BOTÃO DE PESQUISA ----- */
+    /* Reduz o tamanho do botão de pesquisa */
+    .search-button {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    /* ----- SIDEBAR DE CONFIGURAÇÕES ----- */
+    /* Em mobile, a sidebar fica escondida por padrão */
+    .settings-sidebar {
+        position: fixed;
+        left: -280px; /* Escondida fora da tela */
+        top: 0;
+        height: 100vh;
+        width: 280px;
+        z-index: 40;
+        transition: left 0.3s ease;
+    }
+
+    /* Quando ativa, a sidebar desliza para dentro da tela */
+    .settings-sidebar.active {
+        left: 0;
+    }
+
+    /* ----- OVERLAY DE FUNDO ----- */
+    /* Fundo escuro quando sidebar está aberta no mobile */
+    .settings-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 39;
+    }
+
+    .settings-overlay.active {
+        display: block;
+    }
+
+    /* ----- BOTÃO TOGGLE SIDEBAR ----- */
+    /* Botão hamburguer visível apenas no mobile */
+    .settings-toggle {
+        display: flex !important;
+    }
+
+    /* ----- CONTEÚDO PRINCIPAL ----- */
+    /* Ajusta o padding do conteúdo principal */
+    #settings-content-area {
+        width: 100% !important;
+        padding: 16px !important;
+    }
+
+    /* ----- CARDS E GRIDS ----- */
+    /* Força cards em coluna única no mobile */
+    .grid.grid-cols-2 {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* ----- FORMULÁRIOS ----- */
+    /* Ajusta inputs e botões para mobile */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+        font-size: 16px !important; /* Evita zoom no iOS */
+    }
+
+    /* Botões em tela cheia no mobile */
+    .mobile-full-width {
+        width: 100% !important;
+    }
+}
+
+/* ===== ESTILOS TABLET (768px até 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+    
+    /* ----- SIDEBAR DE CONFIGURAÇÕES ----- */
+    /* No tablet, sidebar tem largura reduzida */
+    .settings-sidebar {
+        width: 220px !important;
+    }
+
+    /* ----- CONTEÚDO PRINCIPAL ----- */
+    /* Ajusta a largura do conteúdo considerando sidebar menor */
+    #settings-content-area {
+        margin-left: 220px !important;
+        width: calc(100% - 220px) !important;
+    }
+
+    /* ----- NAVBAR ----- */
+    /* Reduz o espaçamento entre itens de navegação */
+    .nav-item-horizontal {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* ===== ESTILOS DESKTOP (acima de 1024px) ===== */
+@media (min-width: 1024px) {
+    
+    /* ----- SIDEBAR DE CONFIGURAÇÕES ----- */
+    /* No desktop, sidebar sempre visível */
+    .settings-sidebar {
+        position: relative;
+        left: 0 !important;
+        width: 280px;
+    }
+
+    /* ----- BOTÃO TOGGLE SIDEBAR ----- */
+    /* Esconde o botão hamburguer no desktop */
+    .settings-toggle {
+        display: none !important;
+    }
+
+    /* ----- OVERLAY DE FUNDO ----- */
+    /* Overlay não é necessário no desktop */
+    .settings-overlay {
+        display: none !important;
+    }
+
+    /* ----- CONTEÚDO PRINCIPAL ----- */
+    /* Conteúdo ocupa o espaço restante */
+    #settings-content-area {
+        margin-left: 280px;
+        width: calc(100% - 280px);
+    }
+}
+
+/* ===== ESTILOS MOBILE SMALL (até 640px) ===== */
+@media (max-width: 640px) {
+    
+    /* ----- NAVBAR PRINCIPAL ----- */
+    /* Ainda mais compacto em telas muito pequenas */
+    .navbar .flex.items-center.gap-2 {
+        gap: 4px !important;
+    }
+
+    /* ----- CARDS ----- */
+    /* Reduz padding dos cards */
+    .card-stat {
+        padding: 12px !important;
+    }
+
+    /* ----- TÍTULOS ----- */
+    /* Reduz tamanho dos títulos */
+    h1 {
+        font-size: 24px !important;
+    }
+
+    h2 {
+        font-size: 20px !important;
+    }
+
+    h3 {
+        font-size: 18px !important;
+    }
+
+    /* ----- CONTEÚDO PRINCIPAL ----- */
+    /* Reduz ainda mais o padding */
+    #main-content {
+        padding: 12px !important;
+    }
+
+    /* ----- SIDEBAR DE CONFIGURAÇÕES ----- */
+    /* Sidebar ocupa largura total em telas muito pequenas */
+    .settings-sidebar {
+        width: 100% !important;
+        left: -100% !important;
+    }
+
+    .settings-sidebar.active {
+        left: 0 !important;
+    }
+}
+
+/* ===== UTILITIES RESPONSIVAS ===== */
+
+/* Classe para esconder em mobile */
+.hide-mobile {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .hide-mobile {
+        display: block;
+    }
+}
+
+/* Classe para mostrar apenas em mobile */
+.show-mobile {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .show-mobile {
+        display: none;
+    }
+}
+
+/* ===== ANIMAÇÕES RESPONSIVAS ===== */
+
+/* Transição suave ao abrir/fechar sidebar */
+.settings-sidebar {
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Fade in do overlay */
+.settings-overlay {
+    transition: opacity 0.2s ease;
+}
+
+/* ===== ACESSIBILIDADE ===== */
+
+/* Aumenta área de toque em dispositivos touch */
+@media (hover: none) and (pointer: coarse) {
+    button,
+    a,
+    .clickable {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* ===== ORIENTAÇÃO ===== */
+
+/* Ajustes para modo paisagem em mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .settings-sidebar {
+        width: 240px !important;
+    }
+    
+    .settings-sidebar.active {
+        left: 0 !important;
+    }
+}
