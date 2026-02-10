@@ -18,6 +18,9 @@
     <!-- Arquivo dedicado com media queries e estilos responsivos -->
     <link href="responsive.css" rel="stylesheet">
     
+    <!-- ===== SCRIPT DE CONFIGURAÇÕES ===== -->
+    <script src="./modules/configuracoes.js"></script>
+    
     <style>
         /* ===== IMPORTAÇÃO DE FONTE GOOGLE FONTS ===== */
         /* Importa a fonte Inter com todos os pesos (100-900) para uma tipografia moderna */
@@ -261,6 +264,11 @@
                 
                 // Injeta o HTML no elemento principal da página
                 document.getElementById('main-content').innerHTML = html;
+                
+                // Inicializa abas de configurações se for a seção de configurações
+                if (sectionName === 'configuracoes') {
+                    setTimeout(initializeSettingsTabs, 100);
+                }
                 
                 // ===== ATUALIZAÇÃO DO ESTADO VISUAL DOS BOTÕES DE NAVEGAÇÃO =====
                 

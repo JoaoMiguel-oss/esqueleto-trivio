@@ -104,3 +104,79 @@ img { border-radius: 6px; }
 
 /* Reduce overall border emphasis */
 .border-strong { border-color: rgba(255,255,255,0.04) !important; }
+
+/* ===== CONFIGURAÇÕES - SIDEBAR E TABS ===== */
+
+/* Wrapper principal */
+#settings-wrapper {
+    display: flex;
+    min-height: calc(100vh - 73px);
+}
+
+/* Overlay para mobile */
+.settings-overlay {
+    display: none;
+    position: fixed;
+    top: 73px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+}
+
+.settings-overlay.active {
+    display: block;
+}
+
+/* Sidebar de configurações */
+.settings-sidebar {
+    width: 280px;
+    min-height: calc(100vh - 73px);
+    background: #1A1A1A;
+    border-right: 1px solid rgba(255, 255, 255, 0.03);
+    position: sticky;
+    top: 73px;
+    height: calc(100vh - 73px);
+    overflow-y: auto;
+    z-index: 50;
+}
+
+/* Mobile sidebar */
+@media (max-width: 768px) {
+    .settings-sidebar {
+        position: fixed;
+        left: -280px;
+        top: 73px;
+        transition: left 0.3s ease;
+    }
+    
+    .settings-sidebar.mobile-open {
+        left: 0;
+    }
+}
+
+/* Botões de navegação da sidebar */
+.settings-nav-item {
+    transition: all 0.2s ease;
+}
+
+.settings-nav-item:hover {
+    transform: translateX(4px);
+}
+
+/* Conteúdo das tabs */
+.settings-tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.settings-tab-content.active {
+    display: block;
+}
+
+/* Animação de fade in */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
