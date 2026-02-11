@@ -1,0 +1,16 @@
+{
+  "name": "esqueleto-trivio-backend",
+  "version": "1.0.0",
+  "description": "Backend do projeto Esqueleto Trivio",
+  "main": "servidor.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node servidor.js",
+    "dev": "node servidor.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  }
+}
+

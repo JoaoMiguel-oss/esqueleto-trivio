@@ -1,0 +1,4 @@
+node_modules/
+banco/trivio.db
+.env
+*.log
