@@ -40,7 +40,7 @@ function loadSettingsTab(tabId, button) {
     // Atualiza a variável de aba ativa
     activeTab = tabId;
     
-    // Exibe o conteúdo da aba selecionada
+    // Exibe o conteúdo da aba selecionada com animação
     showTabContent(tabId);
 }
 
@@ -53,12 +53,19 @@ function showTabContent(tabId) {
     const allTabContents = document.querySelectorAll('.settings-tab-content');
     allTabContents.forEach(content => {
         content.classList.remove('active');
+        content.style.opacity = '0';
+        content.style.transform = 'translateX(30px)';
     });
     
     // Exibe o conteúdo da aba selecionada
     const selectedContent = document.getElementById('tab-' + tabId);
     if (selectedContent) {
-        selectedContent.classList.add('active');
+        // Pequeno delay para permitir a transição
+        setTimeout(() => {
+            selectedContent.classList.add('active');
+            selectedContent.style.opacity = '1';
+            selectedContent.style.transform = 'translateX(0)';
+        }, 50);
     }
 }
 
@@ -83,25 +90,24 @@ function toggleSettingsSidebar() {
  * @param {string} tabId - ID da aba atual
  */
 function saveSettings(tabId) {
-    const saveButton = document.querySelector(`#tab-${tabId} .btn-save`);
-    if (saveButton) {
-        saveButton.textContent = 'Salvando...';
-        saveButton.disabled = true;
-        
-        // Simula salvamento
-        setTimeout(() => {
-            saveButton.textContent = 'Salvo!';
-            saveButton.disabled = false;
+    // Feedback visual de salvamento
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(btn => {
+        if (btn.textContent.includes('Salvar') || btn.textContent.includes('Salvar')) {
+            const originalText = btn.textContent;
+            btn.textContent = 'Salvando...';
+            btn.style.opacity = '0.7';
             
-            // Retorna ao texto original após 2 segundos
             setTimeout(() => {
-                saveButton.textContent = 'Salvar alterações';
-            }, 2000);
-        }, 1000);
-    } else {
-        // Feedback geral
-        alert('Configurações salvas com sucesso!');
-    }
+                btn.textContent = '✓ Salvo!';
+                btn.style.opacity = '1';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 1500);
+            }, 800);
+        }
+    });
 }
 
 // Exporta funções para uso global

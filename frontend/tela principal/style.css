@@ -105,6 +105,112 @@ img { border-radius: 6px; }
 /* Reduce overall border emphasis */
 .border-strong { border-color: rgba(255,255,255,0.04) !important; }
 
+/* ===== ANIMAÇÕES GLOBAIS ===== */
+
+/* Fade In - Para elementos que aparecem */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade In Left - Para elementos que aparecem da esquerda */
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Fade In Right - Para elementos que aparecem da direita */
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Scale In - Para elementos que aparecem com zoom */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Float In - Para elementos que flutuam para cima */
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Pulse Fade - Para elementos que piscam suavemente */
+@keyframes pulseFade {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ===== CLASSES DE ANIMAÇÃO ===== */
+
+/* Animação padrão para conteúdo */
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Animação da esquerda */
+.animate-fadeInLeft {
+    animation: fadeInLeft 0.5s ease-out forwards;
+}
+
+/* Animação da direita */
+.animate-fadeInRight {
+    animation: fadeInRight 0.5s ease-out forwards;
+}
+
+/* Animação de escala */
+.animate-scaleIn {
+    animation: scaleIn 0.4s ease-out forwards;
+}
+
+/* Animação de flutuação */
+.animate-floatIn {
+    animation: floatIn 0.6s ease-out forwards;
+}
+
+/* Atrasos de animação */
+.animation-delay-100 { animation-delay: 0.1s; }
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-300 { animation-delay: 0.3s; }
+.animation-delay-400 { animation-delay: 0.4s; }
+.animation-delay-500 { animation-delay: 0.5s; }
+
 /* ===== CONFIGURAÇÕES - SIDEBAR E TABS ===== */
 
 /* Wrapper principal */
@@ -123,6 +229,7 @@ img { border-radius: 6px; }
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 40;
+    animation: fadeIn 0.3s ease-out;
 }
 
 .settings-overlay.active {
@@ -140,6 +247,7 @@ img { border-radius: 6px; }
     height: calc(100vh - 73px);
     overflow-y: auto;
     z-index: 50;
+    animation: fadeInLeft 0.4s ease-out;
 }
 
 /* Mobile sidebar */
@@ -153,26 +261,131 @@ img { border-radius: 6px; }
     
     .settings-sidebar.mobile-open {
         left: 0;
+        animation: slideInRight 0.1.5s ease-out;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-280px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 
 /* Botões de navegação da sidebar */
 .settings-nav-item {
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .settings-nav-item:hover {
-    transform: translateX(4px);
+    transform: translateX(6px) scale(1.02);
+}
+
+.settings-nav-item.active {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
 }
 
 /* Conteúdo das tabs */
 .settings-tab-content {
     display: none;
-    animation: fadeIn 0.3s ease;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .settings-tab-content.active {
     display: block;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ===== ELEMENTOS DO CONTEÚDO COM ANIMAÇÃO ===== */
+
+/* Cards com animação de hover */
+.card, .tab-card {
+    animation: scaleIn 0.4s ease-out;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover, .tab-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Botões com animação */
+button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* Inputs com animação de foco */
+input:focus, textarea:focus, select:focus {
+    animation: pulseFade 0.3s ease-out;
+}
+
+/* Imagens com animação de carregamento */
+img {
+    animation: scaleIn 0.5s ease-out;
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+/* Badges com animação */
+.badge {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Checkboxes e radios */
+input[type="checkbox"], input[type="radio"] {
+    transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked, input[type="radio"]:checked {
+    animation: scaleIn 0.2s ease-out;
+}
+
+/* Ícones com animação */
+svg {
+    transition: all 0.3s ease;
+}
+
+button:hover svg {
+    transform: scale(1.1);
+}
+
+/* ===== ANIMAÇÃO DO CONTEÚDO PRINCIPAL ===== */
+
+#main-content {
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* Animações sequenciais para elementos dentro do conteúdo */
+#main-content > * {
+    animation: floatIn 0.5s ease-out backwards;
+}
+
+#main-content > *:nth-child(1) { animation-delay: 0.1s; }
+#main-content > *:nth-child(2) { animation-delay: 0.2s; }
+#main-content > *:nth-child(3) { animation-delay: 0.3s; }
+#main-content > *:nth-child(4) { animation-delay: 0.4s; }
+#main-content > *:nth-child(5) { animation-delay: 0.5s; }
+
+/* ===== PÁGINA DE CONFIGURAÇÕES ===== */
+
+/* Animações específicas dos elementos */
+#tab-perfil, #tab-dados-pessoais, #tab-sobre-nos, #tab-contato, #tab-seguranca, #tab-notificacoes {
+    animation: floatIn 0.6s ease-out;
 }
 
 /* Animação de fade in */
