@@ -5,7 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
-// Rotas Legadas (Recomendo migrar para a estrutura MVC e remover estas linhas)
+
 // const rotasAutenticacao = require('./rotas/autenticacao');
 // const rotasUsuario = require('./rotas/usuario');
 // const rotasTelas = require('./rotas/telas');

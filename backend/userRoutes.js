@@ -4,7 +4,7 @@ const userController = require('../controllers/userController');
 
 const router = express.Router();
 
-// Configuração do Multer (Armazena na memória RAM temporariamente)
+// Configuração do Multer (Armazena na memória RAM temporariamente  conta pra ninguem   g)
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
