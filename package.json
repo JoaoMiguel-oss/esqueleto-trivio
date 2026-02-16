@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "cloudinary": "^2.9.0",
+    "multer": "^2.0.2",
+    "streamifier": "^0.1.1"
+  }
+}
