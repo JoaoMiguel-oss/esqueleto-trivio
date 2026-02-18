@@ -5,12 +5,12 @@ const { uploadParaCloudinary } = require('../services/uploadService');
 
 const criarUsuario = async (req, res) => {
   try {
-    const { email, senha } = req.body;
+    const { nome, email, senha } = req.body;
     const arquivo = req.file;
 
     // Validação básica
-    if (!email || !senha) {
-      return res.status(400).json({ erro: 'Email e senha são obrigatórios' });
+    if (!nome || !email || !senha) {
+      return res.status(400).json({ erro: 'Nome, email e senha são obrigatórios' });
     }
 
     // Verifica se email já existe
@@ -35,15 +35,16 @@ const criarUsuario = async (req, res) => {
 
     // Inserção no banco
     const stmt = db.prepare(`
-      INSERT INTO users (public_id, email, password_hash, photo_url)
-      VALUES (?, ?, ?, ?)
+      INSERT INTO users (public_id, name, email, password_hash, photo_url)
+      VALUES (?, ?, ?, ?, ?)
     `);
     
-    stmt.run(public_id, email, password_hash, photo_url);
+    stmt.run(public_id, nome, email, password_hash, photo_url);
 
     // Retorno (MVP)
     res.status(201).json({
       public_id,
+      nome,
       email,
       photo_url
     });
