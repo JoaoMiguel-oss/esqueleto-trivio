@@ -1,0 +1,395 @@
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #0f0f12;
+  color: #E5E5E5;
+  display: flex;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Layout basics */
+.sidebar { display: none; }
+
+/* Topbar / Navbar */
+.topbar, nav {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.nav-item, .nav-item-active {
+  border-radius: 8px; /* menos arredondado */
+}
+
+.nav-item-active {
+  box-shadow: none; /* evitar sombras pesadas */
+}
+
+/* Inputs */
+.search-input, .topbar input, .test-input {
+  background: #141416;
+  border: 1px solid rgba(45,212,191,0.12);
+  padding: 10px 14px;
+  border-radius: 8px; /* menos redondo */
+  color: #E5E5E5;
+  transition: box-shadow 150ms ease, transform 150ms ease, border-color 150ms ease;
+}
+
+.search-input:focus, .test-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 6px 18px rgba(45,212,191,0.06); /* sutil */
+  transform: translateY(-1px);
+}
+
+/* Cards / Profile / Candidate */
+.card, .panel, .profile-card, .candidate-card, .test-window {
+  background: #151518;
+  border: 1px solid rgba(255,255,255,0.03);
+  border-radius: 10px; /* reduzido */
+  padding: 14px;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.card:hover, .profile-card:hover, .candidate-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(2,6,23,0.6), 0 6px 18px rgba(45,212,191,0.04); /* muito sutil colorido */
+  border-color: rgba(45,212,191,0.06);
+}
+
+/* Evitar sombras exageradas aplicadas inline - força leve */
+.shadow-lg, .hover\:shadow-lg { box-shadow: 0 6px 18px rgba(2,6,23,0.5) !important; }
+
+/* Test windows: tornar borda mais suave e profissional */
+.test-window {
+  border-style: solid; /* substituir dashed por sólido mais discreto */
+  border-width: 1px;
+  border-color: rgba(45,212,191,0.10);
+  border-radius: 10px;
+}
+
+.debug-console {
+  background: #0f0f10;
+  border: 1px solid rgba(255,255,255,0.02);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Buttons */
+.btn-primary, button[style*="--color-primary"], .btn-primary:hover {
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(13, 66, 30, 0.08);
+}
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px; }
+tbody tr { border-top: 1px solid rgba(255,255,255,0.03); }
+tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+/* Small helpers */
+.badge { border-radius: 6px; padding: 6px 10px; }
+.highlight-text { color: var(--color-accent); }
+
+/* Reduce overly rounded images */
+img { border-radius: 6px; }
+
+/* Reduce overall border emphasis */
+.border-strong { border-color: rgba(255,255,255,0.04) !important; }
+
+/* ===== ANIMAÇÕES GLOBAIS ===== */
+
+/* Fade In - Para elementos que aparecem */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade In Left - Para elementos que aparecem da esquerda */
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Fade In Right - Para elementos que aparecem da direita */
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Scale In - Para elementos que aparecem com zoom */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Float In - Para elementos que flutuam para cima */
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Pulse Fade - Para elementos que piscam suavemente */
+@keyframes pulseFade {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ===== CLASSES DE ANIMAÇÃO ===== */
+
+/* Animação padrão para conteúdo */
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Animação da esquerda */
+.animate-fadeInLeft {
+    animation: fadeInLeft 0.5s ease-out forwards;
+}
+
+/* Animação da direita */
+.animate-fadeInRight {
+    animation: fadeInRight 0.5s ease-out forwards;
+}
+
+/* Animação de escala */
+.animate-scaleIn {
+    animation: scaleIn 0.4s ease-out forwards;
+}
+
+/* Animação de flutuação */
+.animate-floatIn {
+    animation: floatIn 0.6s ease-out forwards;
+}
+
+/* Atrasos de animação */
+.animation-delay-100 { animation-delay: 0.1s; }
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-300 { animation-delay: 0.3s; }
+.animation-delay-400 { animation-delay: 0.4s; }
+.animation-delay-500 { animation-delay: 0.5s; }
+
+/* ===== CONFIGURAÇÕES - SIDEBAR E TABS ===== */
+
+/* Wrapper principal */
+#settings-wrapper {
+    display: flex;
+    min-height: calc(100vh - 73px);
+}
+
+/* Overlay para mobile */
+.settings-overlay {
+    display: none;
+    position: fixed;
+    top: 73px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.settings-overlay.active {
+    display: block;
+}
+
+/* Sidebar de configurações */
+.settings-sidebar {
+    width: 280px;
+    min-height: calc(100vh - 73px);
+    background: #1A1A1A;
+    border-right: 1px solid rgba(255, 255, 255, 0.03);
+    position: sticky;
+    top: 73px;
+    height: calc(100vh - 73px);
+    overflow-y: auto;
+    z-index: 50;
+    animation: fadeInLeft 0.4s ease-out;
+}
+
+/* Mobile sidebar */
+@media (max-width: 768px) {
+    .settings-sidebar {
+        position: fixed;
+        left: -280px;
+        top: 73px;
+        transition: left 0.3s ease;
+    }
+    
+    .settings-sidebar.mobile-open {
+        left: 0;
+        animation: slideInRight 0.1.5s ease-out;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-280px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Botões de navegação da sidebar */
+.settings-nav-item {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.settings-nav-item:hover {
+    transform: translateX(6px) scale(1.02);
+}
+
+.settings-nav-item.active {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+}
+
+/* Conteúdo das tabs */
+.settings-tab-content {
+    display: none;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.settings-tab-content.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ===== ELEMENTOS DO CONTEÚDO COM ANIMAÇÃO ===== */
+
+/* Cards com animação de hover */
+.card, .tab-card {
+    animation: scaleIn 0.4s ease-out;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover, .tab-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Botões com animação */
+button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* Inputs com animação de foco */
+input:focus, textarea:focus, select:focus {
+    animation: pulseFade 0.3s ease-out;
+}
+
+/* Imagens com animação de carregamento */
+img {
+    animation: scaleIn 0.5s ease-out;
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+/* Badges com animação */
+.badge {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Checkboxes e radios */
+input[type="checkbox"], input[type="radio"] {
+    transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked, input[type="radio"]:checked {
+    animation: scaleIn 0.2s ease-out;
+}
+
+/* Ícones com animação */
+svg {
+    transition: all 0.3s ease;
+}
+
+button:hover svg {
+    transform: scale(1.1);
+}
+
+/* ===== ANIMAÇÃO DO CONTEÚDO PRINCIPAL ===== */
+
+#main-content {
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* Animações sequenciais para elementos dentro do conteúdo */
+#main-content > * {
+    animation: floatIn 0.5s ease-out backwards;
+}
+
+#main-content > *:nth-child(1) { animation-delay: 0.1s; }
+#main-content > *:nth-child(2) { animation-delay: 0.2s; }
+#main-content > *:nth-child(3) { animation-delay: 0.3s; }
+#main-content > *:nth-child(4) { animation-delay: 0.4s; }
+#main-content > *:nth-child(5) { animation-delay: 0.5s; }
+
+/* ===== PÁGINA DE CONFIGURAÇÕES ===== */
+
+/* Animações específicas dos elementos */
+#tab-perfil, #tab-dados-pessoais, #tab-sobre-nos, #tab-contato, #tab-seguranca, #tab-notificacoes {
+    animation: floatIn 0.6s ease-out;
+}
+
+/* Animação de fade in */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}

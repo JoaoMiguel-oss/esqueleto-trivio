@@ -1,0 +1,432 @@
+<div>
+    <!-- Título da página -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold mb-3">Análise de Perfil Profissional</h1>
+        <p class="text-gray-500">Ranking e estatísticas dos melhores resolvedores de desafios</p>
+    </div>
+
+    <!-- Estatísticas Gerais -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="card-stat">
+            <p class="text-gray-500 text-sm mb-2">Total de Profissionais</p>
+            <h3 class="text-3xl font-bold">248</h3>
+            <p class="text-xs mt-2" style="color: var(--color-accent);">↑ 18% vs mês anterior</p>
+        </div>
+        <div class="card-stat">
+            <p class="text-gray-500 text-sm mb-2">Desafios Concluídos</p>
+            <h3 class="text-3xl font-bold">1.432</h3>
+            <p class="text-xs mt-2 text-green-400">✓ Média: 5.8 por usuário</p>
+        </div>
+        <div class="card-stat">
+            <p class="text-gray-500 text-sm mb-2">Tempo Médio</p>
+            <h3 class="text-3xl font-bold">47min</h3>
+            <p class="text-xs mt-2" style="color: var(--color-primary);">Por desafio</p>
+        </div>
+        <div class="card-stat">
+            <p class="text-gray-500 text-sm mb-2">Score Médio</p>
+            <h3 class="text-3xl font-bold">847</h3>
+            <p class="text-xs mt-2 text-blue-400">Top 10% do ranking</p>
+        </div>
+    </div>
+
+    <!-- Filtros e Busca -->
+    <div class="flex flex-col md:flex-row gap-4 mb-8">
+        <div class="relative flex-1">
+            <input type="text" id="searchProfile" placeholder="Buscar por nome ou tecnologia..." 
+                class="w-full py-3 pl-12 pr-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500/30 transition"
+                style="border-color: rgba(233, 30, 99, 0.2); background-color: #2D2D2D;">
+            <svg class="icon absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" viewBox="0 0 24 24">
+                <path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM21.5 21.5L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+        </div>
+        <select id="filterTech" class="px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500" style="border-color: rgba(233, 30, 99, 0.2);">
+            <option value="">Todas as tecnologias</option>
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="csharp">C#</option>
+            <option value="go">Go</option>
+            <option value="rust">Rust</option>
+        </select>
+        <button onclick="filterProfiles()" class="px-6 py-3 rounded-lg font-semibold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Filtrar</button>
+    </div>
+
+    <!-- Tabela de Rankings -->
+    <div class="rounded-lg overflow-hidden" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
+        <!-- Cabeçalho da tabela -->
+        <div class="grid grid-cols-12 gap-4 p-4 text-sm font-semibold text-gray-400 border-b" style="background-color: rgba(0,0,0,0.2);">
+            <div class="col-span-1 text-center">#</div>
+            <div class="col-span-3">Profissional</div>
+            <div class="col-span-2 text-center">Desafios</div>
+            <div class="col-span-3">Tecnologias</div>
+            <div class="col-span-2 text-center">Tempo Médio</div>
+            <div class="col-span-1 text-center">Score</div>
+        </div>
+        
+        <!-- Container para renderizar os perfis -->
+        <div id="profiles-container">
+            <!-- Perfis serão inseridos via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Paginação -->
+    <div class="flex justify-center items-center gap-2 mt-8" id="pagination-container-profiles">
+        <button onclick="previousProfilePage()" class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">←</button>
+        <button onclick="nextProfilePage()" class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">→</button>
+    </div>
+</div>
+
+<script>
+    // ==========================================
+    // DADOS DOS PERFIS PROFISSIONAIS
+    // ==========================================
+    
+    /**
+     * Dados mockados de profissionais
+     * Inclui: nome, avatar, desafios resolvidos, tecnologias, tempo médio, score
+     */
+    const profilesData = [
+        {
+            id: 1,
+            name: "Carlos Silva",
+            avatar: "CS",
+            challenges: 45,
+            technologies: ["JavaScript", "React", "Node.js", "TypeScript"],
+            avgTime: "32min",
+            score: 982,
+            color: "blue"
+        },
+        {
+            id: 2,
+            name: "Ana Rodrigues",
+            avatar: "AR",
+            challenges: 42,
+            technologies: ["Python", "Django", "FastAPI", "Machine Learning"],
+            avgTime: "38min",
+            score: 956,
+            color: "green"
+        },
+        {
+            id: 3,
+            name: "Pedro Santos",
+            avatar: "PS",
+            challenges: 38,
+            technologies: ["Go", "Rust", "Docker", "Kubernetes"],
+            avgTime: "41min",
+            score: 934,
+            color: "cyan"
+        },
+        {
+            id: 4,
+            name: "Julia Oliveira",
+            avatar: "JO",
+            challenges: 35,
+            technologies: ["Java", "Spring Boot", "Microservices"],
+            avgTime: "44min",
+            score: 912,
+            color: "purple"
+        },
+        {
+            id: 5,
+            name: "Marcos Costa",
+            avatar: "MC",
+            challenges: 33,
+            technologies: ["C#", ".NET", "Azure", "SQL Server"],
+            avgTime: "46min",
+            score: 887,
+            color: "red"
+        },
+        {
+            id: 6,
+            name: "Fernanda Lima",
+            avatar: "FL",
+            challenges: 31,
+            technologies: ["PHP", "Laravel", "Vue.js", "MySQL"],
+            avgTime: "48min",
+            score: 865,
+            color: "yellow"
+        },
+        {
+            id: 7,
+            name: "Ricardo Alves",
+            avatar: "RA",
+            challenges: 29,
+            technologies: ["Python", "Data Science", "Pandas", "TensorFlow"],
+            avgTime: "51min",
+            score: 842,
+            color: "blue"
+        },
+        {
+            id: 8,
+            name: "Beatriz Souza",
+            avatar: "BS",
+            challenges: 27,
+            technologies: ["JavaScript", "Vue.js", "Nuxt", "Tailwind"],
+            avgTime: "43min",
+            score: 828,
+            color: "green"
+        },
+        {
+            id: 9,
+            name: "Lucas Martins",
+            avatar: "LM",
+            challenges: 26,
+            technologies: ["Ruby", "Rails", "PostgreSQL", "AWS"],
+            avgTime: "55min",
+            score: 801,
+            color: "purple"
+        },
+        {
+            id: 10,
+            name: "Amanda Pereira",
+            avatar: "AP",
+            challenges: 24,
+            technologies: ["Swift", "iOS", "Objective-C", "Core Data"],
+            avgTime: "52min",
+            score: 789,
+            color: "red"
+        },
+        {
+            id: 11,
+            name: "Diego Ferreira",
+            avatar: "DF",
+            challenges: 22,
+            technologies: ["Kotlin", "Android", "Jetpack Compose"],
+            avgTime: "49min",
+            score: 756,
+            color: "cyan"
+        },
+        {
+            id: 12,
+            name: "Sofia Costa",
+            avatar: "SC",
+            challenges: 21,
+            technologies: ["Scala", "Apache Spark", "Kafka", "Hadoop"],
+            avgTime: "58min",
+            score: 732,
+            color: "yellow"
+        },
+        {
+            id: 13,
+            name: "Bruno Lima",
+            avatar: "BL",
+            challenges: 19,
+            technologies: ["C++", "Game Dev", "Unity", "Unreal"],
+            avgTime: "62min",
+            score: 698,
+            color: "blue"
+        },
+        {
+            id: 14,
+            name: "Tatiane Rodrigues",
+            avatar: "TR",
+            challenges: 18,
+            technologies: ["React Native", "Firebase", "Redux", "GraphQL"],
+            avgTime: "47min",
+            score: 675,
+            color: "green"
+        },
+        {
+            id: 15,
+            name: "Gabriel Santos",
+            avatar: "GS",
+            challenges: 16,
+            technologies: ["Dart", "Flutter", "Firebase", "Provider"],
+            avgTime: "54min",
+            score: 642,
+            color: "purple"
+        }
+    ];
+
+    const PROFILES_PER_PAGE = 8;
+    let currentProfilePage = 1;
+
+    /**
+     * Função que retorna a cor do rank
+     * @param {number} rank - Posição no ranking
+     * @returns {string} Classe de cor
+     */
+    function getRankColor(rank) {
+        if (rank === 1) return 'text-yellow-400';
+        if (rank === 2) return 'text-gray-300';
+        if (rank === 3) return 'text-amber-600';
+        return 'text-gray-400';
+    }
+
+    /**
+     * Função que retorna o ícone de rank
+     * @param {number} rank - Posição no ranking
+     * @returns {string} Emoji ou SVG
+     */
+    function getRankIcon(rank) {
+        if (rank === 1) return '🥇';
+        if (rank === 2) return '🥈';
+        if (rank === 3) return '🥉';
+        return rank;
+    }
+
+    /**
+     * Função que retorna a cor do avatar
+     * @param {string} color - Nome da cor
+     * @returns {string} Classe de cor
+     */
+    function getProfileAvatarColor(color) {
+        const colors = {
+            "blue": "bg-blue-600",
+            "green": "bg-green-600",
+            "cyan": "bg-cyan-600",
+            "purple": "bg-purple-600",
+            "red": "bg-red-600",
+            "yellow": "bg-yellow-600"
+        };
+        return colors[color] || "bg-gray-600";
+    }
+
+    /**
+     * Função que renderiza a lista de perfis
+     */
+    function renderProfiles() {
+        const container = document.getElementById('profiles-container');
+        if (!container) return;
+
+        const startIndex = (currentProfilePage - 1) * PROFILES_PER_PAGE;
+        const endIndex = startIndex + PROFILES_PER_PAGE;
+        const profilesToShow = profilesData.slice(startIndex, endIndex);
+        const globalStartIndex = (currentProfilePage - 1) * PROFILES_PER_PAGE;
+
+        let html = '';
+        profilesToShow.forEach((profile, index) => {
+            const rank = globalStartIndex + index + 1;
+            const techBadges = profile.technologies.slice(0, 3).map(tech => 
+                `<span class="px-2 py-1 text-xs rounded-md" style="background-color: rgba(233, 30, 99, 0.2); color: var(--color-accent);">${tech}</span>`
+            ).join('');
+
+            html += `
+                <div class="grid grid-cols-12 gap-4 p-4 border-b transition hover:bg-white/5" style="border-color: rgba(255,255,255,0.05);">
+                    <!-- Rank -->
+                    <div class="col-span-1 flex items-center justify-center">
+                        <span class="text-xl font-bold ${getRankColor(rank)}">${getRankIcon(rank)}</span>
+                    </div>
+                    
+                    <!-- Profissional -->
+                    <div class="col-span-3 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full ${getProfileAvatarColor(profile.color)} flex items-center justify-center text-white font-bold text-sm">
+                            ${profile.avatar}
+                        </div>
+                        <div>
+                            <p class="font-semibold text-white">${profile.name}</p>
+                            <p class="text-xs text-gray-500">Top ${Math.round((1 - rank/profilesData.length) * 100)}%</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Desafios -->
+                    <div class="col-span-2 flex items-center justify-center">
+                        <span class="text-lg font-bold">${profile.challenges}</span>
+                    </div>
+                    
+                    <!-- Tecnologias -->
+                    <div class="col-span-3 flex items-center gap-2 flex-wrap">
+                        ${techBadges}
+                    </div>
+                    
+                    <!-- Tempo Médio -->
+                    <div class="col-span-2 flex items-center justify-center">
+                        <span class="text-gray-300">${profile.avgTime}</span>
+                    </div>
+                    
+                    <!-- Score -->
+                    <div class="col-span-1 flex items-center justify-center">
+                        <span class="px-3 py-1 rounded-full font-bold text-sm" style="background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); color: white;">${profile.score}</span>
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+        renderProfilePagination();
+    }
+
+    /**
+     * Função que renderiza a paginação
+     */
+    function renderProfilePagination() {
+        const totalPages = Math.ceil(profilesData.length / PROFILES_PER_PAGE);
+        const container = document.getElementById('pagination-container-profiles');
+        
+        if (!container) return;
+        
+        let html = `<button onclick="previousProfilePage()" class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">←</button>`;
+        
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === currentProfilePage) {
+                html += `<button onclick="goToProfilePage(${i})" class="px-4 py-2 rounded-lg" style="background-color: var(--color-primary); color: white; font-weight: 600;">${i}</button>`;
+            } else {
+                html += `<button onclick="goToProfilePage(${i})" class="px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">${i}</button>`;
+            }
+        }
+        
+        html += `<button onclick="nextProfilePage()" class="px-3 py-2 rounded-lg border border-gray-700 hover:border-gray-500 transition">→</button>`;
+        
+        container.innerHTML = html;
+    }
+
+    function goToProfilePage(page) {
+        const totalPages = Math.ceil(profilesData.length / PROFILES_PER_PAGE);
+        if (page >= 1 && page <= totalPages) {
+            currentProfilePage = page;
+            renderProfiles();
+        }
+    }
+
+    function nextProfilePage() {
+        const totalPages = Math.ceil(profilesData.length / PROFILES_PER_PAGE);
+        if (currentProfilePage < totalPages) {
+            currentProfilePage++;
+            renderProfiles();
+        }
+    }
+
+    function previousProfilePage() {
+        if (currentProfilePage > 1) {
+            currentProfilePage--;
+            renderProfiles();
+        }
+    }
+
+    /**
+     * Função de busca/filtragem de perfis
+     */
+    function filterProfiles() {
+        const searchTerm = document.getElementById('searchProfile').value.toLowerCase();
+        const techFilter = document.getElementById('filterTech').value.toLowerCase();
+        
+        let filtered = profilesData;
+        
+        if (searchTerm) {
+            filtered = filtered.filter(p => 
+                p.name.toLowerCase().includes(searchTerm) ||
+                p.technologies.some(t => t.toLowerCase().includes(searchTerm))
+            );
+        }
+        
+        if (techFilter) {
+            filtered = filtered.filter(p => 
+                p.technologies.some(t => t.toLowerCase().includes(techFilter))
+            );
+        }
+        
+        // Temporariamente substitui os dados para renderização
+        const originalData = [...profilesData];
+        profilesData.length = 0;
+        profilesData.push(...filtered);
+        currentProfilePage = 1;
+        renderProfiles();
+        
+        // Restaura os dados originais
+        profilesData.length = 0;
+        profilesData.push(...originalData);
+    }
+
+    // Inicializa a renderização dos perfis
+    renderProfiles();
+</script>

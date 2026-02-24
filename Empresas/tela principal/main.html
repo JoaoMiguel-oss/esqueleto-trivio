@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- ===== CONFIGURAÇÕES BÁSICAS DO DOCUMENTO ===== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivio - Plataforma de Recrutamento</title>
+    
+    <!-- ===== TAILWIND CSS - Framework de utilitários CSS ===== -->
+    <!-- Carrega o Tailwind CSS via CDN para estilização rápida -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- ===== LUCIDE ICONS - Biblioteca de ícones ===== -->
+    <!-- Carrega os ícones Lucide para usar ícone de pesquisa e outros -->
+    <link href="https://cdn.jsdelivr.net/npm/lucide-static/font/lucide.css" rel="stylesheet">
+    
+    <!-- ===== CSS DE RESPONSIVIDADE ===== -->
+    <!-- Arquivo dedicado com media queries e estilos responsivos -->
+    <link href="css/responsive.css" rel="stylesheet">
+    
+    <!-- ===== SCRIPT DE CONFIGURAÇÕES ===== -->
+    <script src="./modules/configuracoes.js"></script>
+    
+    <style>
+        /* ===== IMPORTAÇÃO DE FONTE GOOGLE FONTS ===== */
+        /* Importa a fonte Inter com todos os pesos (100-900) para uma tipografia moderna */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* ===== VARIÁVEIS CSS (Design Tokens) ===== */
+        /* Define as cores principais da aplicação em variáveis reutilizáveis */
+        :root {
+            --color-dark-bg: #1A1A1A;      /* Cor de fundo escuro principal */
+            --color-surface: #242424;       /* Cor de superfície para cards e elementos */
+            --color-primary: #E91E63;       /* Cor primária rosa/magenta */
+            --color-accent: #FF1493;        /* Cor de destaque rosa vibrante */
+        }
+
+        /* ===== ESTILO GLOBAL DO BODY ===== */
+        /* Aplica fonte e cores base para toda a aplicação */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-dark-bg);
+            color: #FFFFFF;
+        }
+
+        /* ===== ESTILO PARA ÍCONES SVG ===== */
+        /* Define tamanho padrão para ícones */
+        .icon {
+            fill: currentColor;
+            width: 24px;
+            height: 24px;
+        }
+
+        /* ===== ESTILO PARA ITEM DE NAVEGAÇÃO ATIVO ===== */
+        /* Destaca o item de menu atualmente selecionado */
+        .nav-item-active {
+            background-color: var(--color-primary) !important;
+            color: white;
+        }
+
+        /* ===== EFEITO HOVER PARA BOTÕES ===== */
+        /* Adiciona transição suave em botões */
+        .btn-hover {
+            transition: all 0.2s ease;
+        }
+
+        /* Efeito de elevação ao passar o mouse sobre botões */
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+        }
+
+        /* ===== ESTILO PARA CARDS DE ESTATÍSTICAS ===== */
+        /* Cards com gradiente e borda para exibir métricas */
+        .card-stat {
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.1), rgba(255, 20, 147, 0.05));
+            border: 1px solid rgba(233, 30, 99, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        /* Efeito de hover nos cards de estatísticas */
+        .card-stat:hover {
+            border-color: rgba(233, 30, 99, 0.4);
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.15), rgba(255, 20, 147, 0.1));
+        }
+
+        /* ===== ANIMAÇÃO DE FADE IN ===== */
+        /* Anima o conteúdo principal ao carregar */
+        #main-content {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        /* Define a animação de fade in (entrada suave) */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== ESTILO PARA NAVBAR HORIZONTAL ===== */
+        /* Estilo específico para a barra de navegação no topo */
+        .navbar {
+            background-color: #0A0A0A;
+            border-bottom: 1px solid #1F1F1F;
+        }
+
+        /* ===== ESTILO PARA BOTÃO DE PESQUISA ===== */
+        /* Botão circular para o ícone de pesquisa */
+        .search-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(233, 30, 99, 0.1);
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        /* Efeito hover no botão de pesquisa */
+        .search-button:hover {
+            background-color: rgba(233, 30, 99, 0.2);
+            border-color: rgba(233, 30, 99, 0.5);
+        }
+
+        /* ===== ESTILO PARA ITENS DE NAVEGAÇÃO HORIZONTAL ===== */
+        /* Ajusta os itens de menu para layout horizontal */
+        .nav-item-horizontal {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        /* Estado hover para itens de navegação */
+        .nav-item-horizontal:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* ===== ESTILO PARA BOTÃO DE NOTIFICAÇÕES ===== */
+        /* Botão de sino com badge */
+        .notification-button {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(233, 30, 99, 0.1);
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        /* Efeito hover no botão de notificações */
+        .notification-button:hover {
+            background-color: rgba(233, 30, 99, 0.2);
+            border-color: rgba(233, 30, 99, 0.5);
+        }
+
+        /* Badge de notificações não lidas */
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 9px;
+            background-color: #EF4444;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #0A0A0A;
+        }
+
+        /* Dropdown de notificações */
+        .notification-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 360px;
+            max-height: 400px;
+            overflow-y: auto;
+            background-color: #1A1A1A;
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        /* Dropdown visível */
+        .notification-dropdown.show {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        /* Item de notificação não lido */
+        .notification-item.unread {
+            background-color: rgba(233, 30, 99, 0.1);
+        }
+
+        /* Item de notificação lido */
+        .notification-item.read {
+            background-color: transparent;
+        }
+
+        /* Hover no item de notificação */
+        .notification-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* ===== ESTILO PARA NOVA ABA PERFIL PROFISSIONAL ===== */
+        /* Badge para diferenciar a nova aba */
+        .nav-item-new {
+            position: relative;
+        }
+
+        .nav-item-new::after {
+            content: 'NOVO';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            padding: 2px 6px;
+            font-size: 9px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            color: white;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===== CONTAINER PRINCIPAL ===== -->
+    <!-- Estrutura de layout com navbar no topo e conteúdo abaixo -->
+    <div class="flex flex-col h-screen">
+
+        <!-- ===== BARRA DE NAVEGAÇÃO SUPERIOR (NAVBAR) ===== -->
+        <!-- Barra fixa no topo com logo, menu e pesquisa -->
+        <nav class="navbar px-6 py-4">
+            <div class="flex items-center justify-between">
+                
+                <!-- ===== LOGO DA EMPRESA (CANTO ESQUERDO) ===== -->
+                <!-- Logo com ícone e nome da empresa Trivio -->
+                <div class="flex items-center gap-3">
+                    <!-- Ícone SVG da logo - Duas estrelas sobrepostas -->
+                    <svg class="w-8 h-8" style="color: var(--color-primary);" viewBox="0 0 24 24">
+                        <!-- Primeira estrela de seis pontas com opacidade reduzida -->
+                        <polygon points="12,2 15,10 23,10 17,15 19,23 12,18 5,23 7,15 1,10 9,10" fill="currentColor" opacity="0.8"/>
+                        <!-- Segunda estrela de seis pontas sobreposta com opacidade total -->
+                        <polygon points="12,6 14,12 20,12 15,16 17,22 12,18 7,22 9,16 4,12 10,12" fill="currentColor" opacity="1"/>
+                    </svg>
+                    <!-- Nome da empresa -->
+                    <span class="text-xl font-bold text-white">Trivio</span>
+                </div>
+
+                <!-- ===== MENU DE NAVEGAÇÃO (CENTRO) ===== -->
+                <!-- Itens de navegação horizontal entre logo e pesquisa -->
+                <div class="flex items-center gap-2">
+                    
+                    <!-- Botão: Bugs para Resolver (Item ativo por padrão) -->
+                    <button 
+                        onclick="loadSection('bugs', this)" 
+                        class="nav-item nav-item-horizontal nav-item-active flex items-center gap-2" 
+                        style="background-color: var(--color-primary);">
+                        <!-- Ícone de bug/escudo -->
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <path d="M12 2L2 12H5.09C5.39 15.11 7.23 18.04 10.02 19.46L12 21.36L13.98 19.46C16.77 18.04 18.61 15.11 18.91 12H22L12 2Z" fill="currentColor"/>
+                        </svg>
+                        <span>Bugs</span>
+                    </button>
+
+                    <!-- Botão: Pagamentos -->
+                    <button 
+                        onclick="loadSection('pagamentos', this)" 
+                        class="nav-item nav-item-horizontal text-gray-300 hover:text-white flex items-center gap-2">
+                        <!-- Ícone de cartão de crédito -->
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M1 9h22" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                        <span>Pagamentos</span>
+                    </button>
+
+                    <!-- Botão: Configurações -->
+                    <button 
+                        onclick="loadSection('configuracoes', this)" 
+                        class="nav-item nav-item-horizontal text-gray-300 hover:text-white flex items-center gap-2">
+                        <!-- Ícone de configurações (três pontos) -->
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="12" cy="19" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="12" cy="5" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M9.09 9.09a3 3 0 0 0 4.24 4.24" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                        <span>Configurações</span>
+                    </button>
+
+                    <!-- Botão: Perfil -->
+                    <button 
+                        onclick="loadSection('perfil', this)" 
+                        class="nav-item nav-item-horizontal text-gray-300 hover:text-white flex items-center gap-2">
+                        <!-- Ícone de usuário/perfil -->
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                        <span>Perfil</span>
+                    </button>
+
+                    <!-- Botão: Perfil Profissional (Nova aba) -->
+                    <button 
+                        onclick="loadSection('perfilProfissional', this)" 
+                        class="nav-item nav-item-horizontal nav-item-new text-gray-300 hover:text-white flex items-center gap-2">
+                        <!-- Ícone de gráficos/ranking -->
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <path d="M3 3v18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <path d="M18 17V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <path d="M13 17V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <path d="M8 17v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                        <span>Perfil Profissional</span>
+                    </button>
+
+                </div>
+
+                <!-- ===== BOTÕES DE AÇÃO (CANTO DIREITO) ===== -->
+                <!-- Container com ambos os botões -->
+                <div class="flex items-center gap-3">
+                    <!-- Botão de notificações -->
+                    <div class="relative">
+                        <button 
+                            onclick="toggleNotifications()" 
+                            class="notification-button flex items-center justify-center" 
+                            aria-label="Notificações">
+                            <!-- Ícone de sino -->
+                            <svg class="w-5 h-5" style="color: var(--color-primary);" viewBox="0 0 24 24">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <!-- Badge de notificações não lidas -->
+                            <span class="notification-badge" id="notification-badge">3</span>
+                        </button>
+                        
+                        <!-- Dropdown de notificações -->
+                        <div class="notification-dropdown" id="notification-dropdown">
+                            <!-- Header do dropdown -->
+                            <div class="p-4 border-b" style="border-color: rgba(255,255,255,0.1);">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-bold text-lg">Notificações</h3>
+                                    <button 
+                                        onclick="markAllAsRead(event)" 
+                                        class="text-xs" 
+                                        style="color: var(--color-primary);">
+                                        Marcar todas como lidas
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Lista de notificações -->
+                            <div id="notifications-list">
+                                <!-- Notificações serão inseridas via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botão de pesquisa -->
+                    <button class="search-button flex items-center justify-center" aria-label="Pesquisar">
+                        <!-- Ícone de lupa -->
+                        <svg class="w-5 h-5" style="color: var(--color-primary);" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        </svg>
+                    </button>
+                </div>
+
+            </div>
+        </nav>
+
+        <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+        <!-- Área onde o conteúdo dinâmico será carregado via JavaScript -->
+        <main class="flex-1 overflow-y-auto bg-gradient-to-b from-gray-900 to-black p-8" id="main-content">
+            <!-- O conteúdo será injetado aqui dinamicamente pela função loadSection() -->
+        </main>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        /**
+         * Função: loadSection
+         * Descrição: Carrega dinamicamente o conteúdo de um módulo HTML externo
+         * 
+         * @param {string} sectionName - Nome do módulo a ser carregado (ex: 'bugs', 'pagamentos')
+         * @param {HTMLElement} buttonElement - Elemento do botão clicado para atualizar estado ativo
+         * 
+         * Como funciona:
+         * 1. Busca o arquivo HTML do módulo na pasta ./modules/
+         * 2. Injeta o HTML no elemento #main-content
+         * 3. Atualiza os estilos dos botões para destacar o item ativo
+         * 4. Exibe mensagem de erro caso o módulo não seja encontrado
+         */
+        async function loadSection(sectionName, buttonElement) {
+            try {
+                // Faz requisição HTTP para buscar o arquivo HTML do módulo
+                const response = await fetch(`./modules/${sectionName}.html`);
+                
+                // Verifica se a requisição foi bem-sucedida (status 200)
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                // Extrai o conteúdo HTML da resposta
+                const html = await response.text();
+                
+                // Injeta o HTML no elemento principal da página
+                document.getElementById('main-content').innerHTML = html;
+                
+                // Inicializa abas de configurações se for a seção de configurações
+                if (sectionName === 'configuracoes') {
+                    setTimeout(initializeSettingsTabs, 100);
+                }
+                
+                // ===== ATUALIZAÇÃO DO ESTADO VISUAL DOS BOTÕES DE NAVEGAÇÃO =====
+                
+                // Seleciona todos os botões de navegação
+                const navItems = document.querySelectorAll('.nav-item');
+                
+                // Remove a classe 'active' de todos os botões
+                navItems.forEach(item => item.classList.remove('nav-item-active'));
+                
+                // Adiciona a classe 'active' ao botão clicado
+                buttonElement.classList.add('nav-item-active');
+                
+                // Define o fundo do botão ativo com a cor primária
+                buttonElement.style.backgroundColor = 'var(--color-primary)';
+                
+                // Remove o fundo dos outros botões (estado inativo)
+                navItems.forEach(item => {
+                    if (item !== buttonElement) {
+                        item.style.backgroundColor = 'transparent';
+                    }
+                });
+                
+            } catch (error) {
+                // ===== TRATAMENTO DE ERRO =====
+                // Exibe mensagem de erro caso o módulo não seja encontrado
+                
+                console.error(`Erro ao carregar módulo ${sectionName}:`, error);
+                
+                // Injeta mensagem de erro visual no conteúdo principal
+                document.getElementById('main-content').innerHTML = `
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface);">
+                        <p class="text-red-400 font-semibold mb-2">⚠️ Erro ao carregar conteúdo</p>
+                        <p class="text-sm text-gray-400">Módulo: ${sectionName}</p>
+                        <p class="text-sm text-gray-400">Caminho esperado: ./modules/${sectionName}.html</p>
+                        <p class="text-xs text-gray-500 mt-2">Erro: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        /**
+         * Event Listener: DOMContentLoaded
+         * Descrição: Executa código assim que o DOM estiver completamente carregado
+         * 
+         * Como funciona:
+         * 1. Aguarda o carregamento completo da estrutura HTML
+         * 2. Busca o botão "Bugs" (primeiro item da navegação)
+         * 3. Carrega automaticamente a seção de bugs como conteúdo inicial
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seleciona o botão que contém 'bugs' no atributo onclick
+            const bugsButton = document.querySelector('button[onclick*="bugs"]');
+            
+            // Se o botão existir, carrega a seção de bugs
+            if (bugsButton) loadSection('bugs', bugsButton);
+        });
+
+        // ==========================================
+        // SISTEMA DE NOTIFICAÇÕES
+        // ==========================================
+        
+        /**
+         * Dados mockados de notificações
+         * Estruturado para fácil integração com API futura
+         */
+        let notifications = [
+            {
+                id: 1,
+                type: 'completion',
+                user: 'Carlos Silva',
+                challenge: 'Login não funciona',
+                company: 'Google Workspace',
+                time: Date.now() - 300000, // 5 min atrás
+                read: false
+            },
+            {
+                id: 2,
+                type: 'new_challenge',
+                user: null,
+                challenge: 'Memory leak em produção',
+                company: 'Analytics Platform',
+                time: Date.now() - 1800000, // 30 min atrás
+                read: false
+            },
+            {
+                id: 3,
+                type: 'completion',
+                user: 'Ana Rodrigues',
+                challenge: 'API timeout aleatório',
+                company: 'Netflix Clone',
+                time: Date.now() - 3600000, // 1h atrás
+                read: false
+            },
+            {
+                id: 4,
+                type: 'completion',
+                user: 'Pedro Santos',
+                challenge: 'CSS responsivo quebrado',
+                company: 'E-commerce XYZ',
+                time: Date.now() - 7200000, // 2h atrás
+                read: true
+            },
+            {
+                id: 5,
+                type: 'new_challenge',
+                user: null,
+                challenge: 'Segurança SQL Injection',
+                company: 'Social Network',
+                time: Date.now() - 14400000, // 4h atrás
+                read: true
+            }
+        ];
+
+        /**
+         * Função que formata o tempo relativo
+         * @param {number} timestamp - Timestamp em milissegundos
+         * @returns {string} Tempo formatado
+         */
+        function formatNotificationTime(timestamp) {
+            const diff = Date.now() - timestamp;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            
+            if (minutes < 1) return 'Agora mesmo';
+            if (minutes < 60) return `${minutes} min atrás`;
+            if (hours < 24) return `${hours}h atrás`;
+            return `${Math.floor(hours / 24)} dias atrás`;
+        }
+
+        /**
+         * Função que renderiza a lista de notificações
+         */
+        function renderNotifications() {
+            const container = document.getElementById('notifications-list');
+            if (!container) return;
+            
+            // Ordena por tempo (mais recentes primeiro)
+            const sortedNotifications = [...notifications].sort((a, b) => b.time - a.time);
+            
+            let html = '';
+            sortedNotifications.forEach(notif => {
+                const isRead = notif.read ? 'read' : 'unread';
+                const iconColor = notif.read ? 'text-gray-400' : 'text-pink-500';
+                
+                // Ícone baseado no tipo de notificação
+                let icon = '';
+                if (notif.type === 'completion') {
+                    icon = `<svg class="w-5 h-5 ${iconColor}" viewBox="0 0 24 24">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>`;
+                } else {
+                    icon = `<svg class="w-5 h-5 ${iconColor}" viewBox="0 0 24 24">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>`;
+                }
+                
+                // Texto da notificação
+                let text = '';
+                if (notif.type === 'completion') {
+                    text = `<strong>${notif.user}</strong> concluiu o desafio <strong>${notif.challenge}</strong>`;
+                } else {
+                    text = `Novo desafio técnico disponível: <strong>${notif.challenge}</strong>`;
+                }
+                
+                html += `
+                    <div 
+                        class="notification-item ${isRead} p-4 border-b cursor-pointer transition" 
+                        style="border-color: rgba(255,255,255,0.05);"
+                        onclick="markAsRead(${notif.id}, this)">
+                        <div class="flex gap-3">
+                            <div class="flex-shrink-0 mt-1">
+                                ${icon}
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm text-gray-300">${text}</p>
+                                <p class="text-xs text-gray-500 mt-1">${formatNotificationTime(notif.time)}</p>
+                            </div>
+                            ${!notif.read ? '<div class="flex-shrink-0"><span class="w-2 h-2 rounded-full" style="background-color: var(--color-primary);"></span></div>' : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Atualiza o badge
+            updateNotificationBadge();
+        }
+
+        /**
+         * Função que atualiza o badge de notificações
+         */
+        function updateNotificationBadge() {
+            const unreadCount = notifications.filter(n => !n.read).length;
+            const badge = document.getElementById('notification-badge');
+            
+            if (badge) {
+                badge.textContent = unreadCount;
+                badge.style.display = unreadCount > 0 ? 'flex' : 'none';
+            }
+        }
+
+        /**
+         * Função que marca uma notificação como lida
+         * @param {number} id - ID da notificação
+         * @param {HTMLElement} element - Elemento do DOM clicado
+         */
+        function markAsRead(id, element) {
+            const notif = notifications.find(n => n.id === id);
+            if (notif && !notif.read) {
+                notif.read = true;
+                element.classList.remove('unread');
+                element.classList.add('read');
+                
+                // Remove o indicador de não lido
+                const indicator = element.querySelector('.rounded-full');
+                if (indicator) indicator.remove();
+                
+                updateNotificationBadge();
+            }
+        }
+
+        /**
+         * Função que marca todas as notificações como lidas
+         * @param {Event} event - Evento do clique
+         */
+        function markAllAsRead(event) {
+            event.stopPropagation();
+            notifications.forEach(n => n.read = true);
+            renderNotifications();
+        }
+
+        /**
+         * Função que alterna a visibilidade do dropdown de notificações
+         */
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notification-dropdown');
+            dropdown.classList.toggle('show');
+            
+            // Renderiza as notificações ao abrir
+            if (dropdown.classList.contains('show')) {
+                renderNotifications();
+            }
+        }
+
+        // Fecha o dropdown quando clicar fora
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('notification-dropdown');
+            const button = document.querySelector('.notification-button');
+            
+            if (dropdown && !dropdown.contains(event.target) && !button.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+    </script>
+
+</body>
+</html>

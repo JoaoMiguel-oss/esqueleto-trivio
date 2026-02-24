@@ -1,0 +1,194 @@
+<div>
+    <!-- Feed de Usuários Ativos em Tempo Real -->
+    <div class="mb-8 p-6 rounded-lg" style="background: linear-gradient(135deg, rgba(233, 30, 99, 0.1), rgba(255, 20, 147, 0.05)); border: 1px solid rgba(233, 30, 99, 0.2);">
+        <div class="flex items-center gap-3 mb-4">
+            <div class="relative">
+                <!-- Ícone de atividade/pulso -->
+                <svg class="w-6 h-6" style="color: var(--color-primary);" viewBox="0 0 24 24">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <!-- Indicador de status online -->
+                <span class="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2" style="border-color: var(--color-surface);"></span>
+            </div>
+            <h2 class="text-xl font-bold">Usuários resolvendo desafios agora</h2>
+            <span class="text-sm text-gray-400" id="active-count">0</span>
+        </div>
+        
+        <!-- Container do feed de usuários -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="active-users-feed">
+            <!-- Usuários serão inseridos aqui via JavaScript -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // ==========================================
+    // FEED DE USUÁRIOS ATIVOS EM TEMPO REAL
+    // ==========================================
+    
+    /**
+     * Dados mockados de usuários ativos
+     * Simula usuários que estão resolvendo desafios no momento
+     */
+    const activeUsersData = [
+        {
+            id: 1,
+            name: "Carlos Silva",
+            avatar: "CS",
+            challenge: "Login não funciona",
+            company: "Google Workspace",
+            startTime: Date.now() - Math.random() * 3600000, // 0-60 min atrás
+            color: "blue"
+        },
+        {
+            id: 2,
+            name: "Ana Rodrigues",
+            avatar: "AR",
+            challenge: "API timeout aleatório",
+            company: "Netflix Clone",
+            startTime: Date.now() - Math.random() * 7200000, // 0-120 min atrás
+            color: "green"
+        },
+        {
+            id: 3,
+            name: "Pedro Santos",
+            avatar: "PS",
+            challenge: "Memory leak em produção",
+            company: "Analytics Platform",
+            startTime: Date.now() - Math.random() * 1800000, // 0-30 min atrás
+            color: "red"
+        },
+        {
+            id: 4,
+            name: "Julia Oliveira",
+            avatar: "JO",
+            challenge: "Validação de email",
+            company: "SaaS Platform",
+            startTime: Date.now() - Math.random() * 5400000, // 0-90 min atrás
+            color: "yellow"
+        },
+        {
+            id: 5,
+            name: "Marcos Costa",
+            avatar: "MC",
+            challenge: "CSS responsivo quebrado",
+            company: "E-commerce XYZ",
+            startTime: Date.now() - Math.random() * 2400000, // 0-40 min atrás
+            color: "purple"
+        },
+        {
+            id: 6,
+            name: "Fernanda Lima",
+            avatar: "FL",
+            challenge: "Cache não invalida",
+            company: "Banco de Dados App",
+            startTime: Date.now() - Math.random() * 4500000, // 0-75 min atrás
+            color: "cyan"
+        }
+    ];
+    
+    /**
+     * Função que formata o tempo decorrido
+     * @param {number} startTime - Timestamp de início em milissegundos
+     * @returns {string} Tempo formatado (ex: "15 min", "1h 23min")
+     */
+    function formatElapsedTime(startTime) {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000); // segundos
+        
+        if (elapsed < 60) {
+            return `${elapsed}s`;
+        } else if (elapsed < 3600) {
+            const min = Math.floor(elapsed / 60);
+            return `${min} min`;
+        } else {
+            const hours = Math.floor(elapsed / 3600);
+            const min = Math.floor((elapsed % 3600) / 60);
+            return `${hours}h ${min}min`;
+        }
+    }
+    
+    /**
+     * Função que retorna a cor de fundo para o avatar
+     * @param {string} color - Nome da cor
+     * @returns {string} Classe CSS de cor de fundo
+     */
+    function getAvatarColor(color) {
+        const colors = {
+            "blue": "bg-blue-600",
+            "green": "bg-green-600",
+            "red": "bg-red-600",
+            "yellow": "bg-yellow-600",
+            "purple": "bg-purple-600",
+            "cyan": "bg-cyan-600"
+        };
+        return colors[color] || "bg-gray-600";
+    }
+    
+    /**
+     * Função que renderiza o feed de usuários ativos
+     */
+    function renderActiveUsersFeed() {
+        const feedContainer = document.getElementById('active-users-feed');
+        if (!feedContainer) return;
+        
+        // Ordena por tempo (mais antigos primeiro)
+        const sortedUsers = [...activeUsersData].sort((a, b) => a.startTime - b.startTime);
+        
+        let html = '';
+        sortedUsers.forEach(user => {
+            html += `
+                <div class="p-4 rounded-lg transition-all hover:scale-[1.02]" style="background-color: rgba(36, 36, 36, 0.8); border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="flex items-center gap-3">
+                        <!-- Avatar do usuário -->
+                        <div class="w-10 h-10 rounded-full ${getAvatarColor(user.color)} flex items-center justify-center text-white font-bold text-sm">
+                            ${user.avatar}
+                        </div>
+                        <!-- Informações do usuário -->
+                        <div class="flex-1 min-w-0">
+                            <p class="font-semibold text-white truncate">${user.name}</p>
+                            <p class="text-xs text-gray-400 truncate">${user.challenge}</p>
+                        </div>
+                        <!-- Tempo decorrido -->
+                        <div class="text-right">
+                            <span class="text-xs font-mono" style="color: var(--color-primary);">${formatElapsedTime(user.startTime)}</span>
+                        </div>
+                    </div>
+                    <!-- Barra de progresso simulada -->
+                    <div class="mt-3 h-1.5 rounded-full bg-gray-700 overflow-hidden">
+                        <div class="h-full rounded-full transition-all duration-1000" style="width: ${Math.random() * 60 + 20}%; background: linear-gradient(90deg, var(--color-primary), var(--color-accent));"></div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        feedContainer.innerHTML = html;
+        
+        // Atualiza o contador de usuários ativos
+        const countElement = document.getElementById('active-count');
+        if (countElement) {
+            countElement.textContent = `${activeUsersData.length} online`;
+        }
+    }
+    
+    /**
+     * Função que atualiza o feed periodicamente
+     * Simula mudanças dinâmicas nos usuários ativos
+     */
+    function updateFeedPeriodically() {
+        // Atualiza o tempo decorrido a cada segundo
+        renderActiveUsersFeed();
+        
+        // Simula mudanças aleatórias a cada 10 segundos
+        setInterval(() => {
+            // Muda aleatoriamente o progresso de alguns usuários
+            const randomIndex = Math.floor(Math.random() * activeUsersData.length);
+            // Pequena variação no tempo (simula atividade)
+            activeUsersData[randomIndex].startTime -= Math.random() * 5000;
+            renderActiveUsersFeed();
+        }, 10000);
+    }
+    
+    // Inicializa o feed de usuários ativos
+    renderActiveUsersFeed();
+    updateFeedPeriodically();
+</script>

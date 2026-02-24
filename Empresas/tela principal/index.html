@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- ===== CONFIGURAÇÕES BÁSICAS DO DOCUMENTO ===== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivio - Plataforma de Recrutamento</title>
+    
+    <!-- ===== TAILWIND CSS - Framework de utilitários CSS ===== -->
+    <!-- Carrega o Tailwind CSS via CDN para estilização rápida -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- ===== LUCIDE ICONS - Biblioteca de ícones ===== -->
+    <!-- Carrega os ícones Lucide para usar ícone de pesquisa e outros -->
+    <link href="https://cdn.jsdelivr.net/npm/lucide-static/font/lucide.css" rel="stylesheet">
+    
+    <!-- ===== CSS DE RESPONSIVIDADE ===== -->
+    <!-- Arquivo dedicado com media queries e estilos responsivos -->
+    <link href="css/responsive.css" rel="stylesheet">
+    
+    <style>
+        /* ===== IMPORTAÇÃO DE FONTE GOOGLE FONTS ===== */
+        /* Importa a fonte Inter com todos os pesos (100-900) para uma tipografia moderna */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* ===== VARIÁVEIS CSS (Design Tokens) ===== */
+        /* Define as cores principais da aplicação em variáveis reutilizáveis */
+        :root {
+            --color-dark-bg: #1A1A1A;      /* Cor de fundo escuro principal */
+            --color-surface: #242424;       /* Cor de superfície para cards e elementos */
+            --color-primary: #E91E63;       /* Cor primária rosa/magenta */
+            --color-accent: #FF1493;        /* Cor de destaque rosa vibrante */
+        }
+
+        /* ===== ESTILO GLOBAL DO BODY ===== */
+        /* Aplica fonte e cores base para toda a aplicação */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-dark-bg);
+            color: #FFFFFF;
+        }
+
+        /* ===== ESTILO PARA ÍCONES SVG ===== */
+        /* Define tamanho padrão para ícones */
+        .icon {
+            fill: currentColor;
+            width: 24px;
+            height: 24px;
+        }
+
+        /* ===== ESTILO PARA ITEM DE NAVEGAÇÃO ATIVO ===== */
+        /* Destaca o item de menu atualmente selecionado */
+        .nav-item-active {
+            background-color: var(--color-primary) !important;
+            color: white;
+        }
+
+        /* ===== EFEITO HOVER PARA BOTÕES ===== */
+        /* Adiciona transição suave em botões */
+        .btn-hover {
+            transition: all 0.2s ease;
+        }
+
+        /* Efeito de elevação ao passar o mouse sobre botões */
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+        }
+
+        /* ===== ESTILO PARA CARDS DE ESTATÍSTICAS ===== */
+        /* Cards com gradiente e borda para exibir métricas */
+        .card-stat {
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.1), rgba(255, 20, 147, 0.05));
+            border: 1px solid rgba(233, 30, 99, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        /* Efeito de hover nos cards de estatísticas */
+        .card-stat:hover {
+            border-color: rgba(233, 30, 99, 0.4);
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.15), rgba(255, 20, 147, 0.1));
+        }
+
+        /* ===== ANIMAÇÃO DE FADE IN ===== */
+        /* Anima o conteúdo principal ao carregar */
+        #main-content {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        /* Define a animação de fade in (entrada suave) */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== ESTILO PARA NAVBAR HORIZONTAL ===== */
+        /* Estilo específico para a barra de navegação no topo */
+        .navbar {
+            background-color: #0A0A0A;
+            border-bottom: 1px solid #1F1F1F;
+        }
+
+        /* ===== ESTILO PARA BOTÃO DE PESQUISA ===== */
+        /* Botão circular para o ícone de pesquisa */
+        .search-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(233, 30, 99, 0.1);
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        /* Efeito hover no botão de pesquisa */
+        .search-button:hover {
+            background-color: rgba(233, 30, 99, 0.2);
+            border-color: rgba(233, 30, 99, 0.5);
+        }
+
+        /* ===== ESTILO PARA ITENS DE NAVEGAÇÃO HORIZONTAL ===== */
+        /* Ajusta os itens de menu para layout horizontal */
+        .nav-item-horizontal {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        /* Estado hover para itens de navegação */
+        .nav-item-horizontal:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===== CONTAINER PRINCIPAL ===== -->
+    <!-- Estrutura de layout com navbar no topo e conteúdo abaixo -->
+    <div class="flex flex-col h-screen">
+
+        <!-- ===== BARRA DE NAVEGAÇÃO SUPERIOR (NAVBAR) ===== -->
+        <!-- Barra fixa no topo com logo, menu e pesquisa -->
+        <nav class="navbar px-6 py-4">
+            <div class="flex items-center justify-between">
+                
+                <!-- ===== LOGO DA EMPRESA (CANTO ESQUERDO) ===== -->
+                <!-- Logo com ícone e nome da empresa Trivio -->
+                <div class="flex items-center gap-3">
+                    <!-- Ícone SVG da logo - Duas estrelas sobrepostas -->
+                    <svg class="w-8 h-8" style="color: var(--color-primary);" viewBox="0 0 24 24">
+                        <!-- Primeira estrela de seis pontas com opacidade reduzida -->
+                        <polygon points="12,2 15,10 23,10 17,15 19,23 12,18 5,23 7,15 1,10 9,10" fill="currentColor" opacity="0.8"/>
+                        <!-- Segunda estrela de seis pontas sobreposta com opacidade total -->
+                        <polygon points="12,6 14,12 20,12 15,16 17,22 12,18 7,22 9,16 4,12 10,12" fill="currentColor" opacity="1"/>
+                    </svg>
+                    <!-- Nome da empresa -->
+                    <span class="text-xl font-bold text-white">Trivio</span>
+                </div>
+
+                <!-- ===== MENU DE NAVEGAÇÃO (CENTRO) ===== -->
+                <!-- Itens de navegação horizontal entre logo e pesquisa -->
+                <div class="flex items-center gap-2">
+                    
+                    <!-- Botão: Desafios para Resolver (Item ativo por padrão) -->
+                    <button 
+                        onclick="loadSection('bugs', this)" 
+                        class="nav-item nav-item-horizontal nav-item-active flex items-center gap-2" 
+                        style="background-color: var(--color-primary);">
+                        <!-- Ícone de bug/escudo -->
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <path d="M12 2L2 12H5.09C5.39 15.11 7.23 18.04 10.02 19.46L12 21.36L13.98 19.46C16.77 18.04 18.61 15.11 18.91 12H22L12 2Z" fill="currentColor"/>
+                        </svg>
+                        <span>Desafios</span>
+                    </button>
+
+                    <!-- Botão: Pagamentos -->
+                    <button 
+                        onclick="loadSection('pagamentos', this)" 
+                        class="nav-item nav-item-horizontal text-gray-300 hover:text-white flex items-center gap-2">
+                        <!-- Ícone de cartão de crédito -->
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M1 9h22" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                        <span>Pagamentos</span>
+                    </button>
+
+                    <!-- Botão: Configurações -->
+                    <button 
+                        onclick="loadSection('configuracoes', this)" 
+                        class="nav-item nav-item-horizontal text-gray-300 hover:text-white flex items-center gap-2">
+                        <!-- Ícone de configurações (três pontos) -->
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="12" cy="19" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="12" cy="5" r="1" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <path d="M9.09 9.09a3 3 0 0 0 4.24 4.24" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                        <span>Configurações</span>
+                    </button>
+
+                    <!-- Botão: Perfil -->
+                    <button 
+                        onclick="loadSection('perfil', this)" 
+                        class="nav-item nav-item-horizontal text-gray-300 hover:text-white flex items-center gap-2">
+                        <!-- Ícone de usuário/perfil -->
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                        <span>Perfil</span>
+                    </button>
+
+                </div>
+
+                <!-- ===== ÍCONE DE PESQUISA (CANTO DIREITO) ===== -->
+                <!-- Botão circular com ícone de lupa para pesquisa -->
+                <button class="search-button flex items-center justify-center" aria-label="Pesquisar">
+                    <!-- Ícone de pesquisa da biblioteca Lucide -->
+                    <i class="icon-search" style="font-size: 20px; color: var(--color-primary);"></i>
+                </button>
+
+            </div>
+        </nav>
+
+        <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+        <!-- Área onde o conteúdo dinâmico será carregado via JavaScript -->
+        <main class="flex-1 overflow-y-auto bg-gradient-to-b from-gray-900 to-black p-8" id="main-content">
+            <!-- O conteúdo será injetado aqui dinamicamente pela função loadSection() -->
+        </main>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        /**
+         * Função: loadSection
+         * Descrição: Carrega dinamicamente o conteúdo de um módulo HTML externo
+         * 
+         * @param {string} sectionName - Nome do módulo a ser carregado (ex: 'bugs', 'pagamentos')
+         * @param {HTMLElement} buttonElement - Elemento do botão clicado para atualizar estado ativo
+         * 
+         * Como funciona:
+         * 1. Busca o arquivo HTML do módulo na pasta ./modules/
+         * 2. Injeta o HTML no elemento #main-content
+         * 3. Atualiza os estilos dos botões para destacar o item ativo
+         * 4. Exibe mensagem de erro caso o módulo não seja encontrado
+         */
+        async function loadSection(sectionName, buttonElement) {
+            try {
+                // Faz requisição HTTP para buscar o arquivo HTML do módulo
+                const response = await fetch(`./modules/${sectionName}.html`);
+                
+                // Verifica se a requisição foi bem-sucedida (status 200)
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                // Extrai o conteúdo HTML da resposta
+                const html = await response.text();
+                
+                // Injeta o HTML no elemento principal da página
+                document.getElementById('main-content').innerHTML = html;
+                
+                // ===== ATUALIZAÇÃO DO ESTADO VISUAL DOS BOTÕES DE NAVEGAÇÃO =====
+                
+                // Seleciona todos os botões de navegação
+                const navItems = document.querySelectorAll('.nav-item');
+                
+                // Remove a classe 'active' de todos os botões
+                navItems.forEach(item => item.classList.remove('nav-item-active'));
+                
+                // Adiciona a classe 'active' ao botão clicado
+                buttonElement.classList.add('nav-item-active');
+                
+                // Define o fundo do botão ativo com a cor primária
+                buttonElement.style.backgroundColor = 'var(--color-primary)';
+                
+                // Remove o fundo dos outros botões (estado inativo)
+                navItems.forEach(item => {
+                    if (item !== buttonElement) {
+                        item.style.backgroundColor = 'transparent';
+                    }
+                });
+                
+            } catch (error) {
+                // ===== TRATAMENTO DE ERRO =====
+                // Exibe mensagem de erro caso o módulo não seja encontrado
+                
+                console.error(`Erro ao carregar módulo ${sectionName}:`, error);
+                
+                // Injeta mensagem de erro visual no conteúdo principal
+                document.getElementById('main-content').innerHTML = `
+                    <div class="p-6 rounded-lg" style="background-color: var(--color-surface);">
+                        <p class="text-red-400 font-semibold mb-2">⚠️ Erro ao carregar conteúdo</p>
+                        <p class="text-sm text-gray-400">Módulo: ${sectionName}</p>
+                        <p class="text-sm text-gray-400">Caminho esperado: ./modules/${sectionName}.html</p>
+                        <p class="text-xs text-gray-500 mt-2">Erro: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        /**
+         * Event Listener: DOMContentLoaded
+         * Descrição: Executa código assim que o DOM estiver completamente carregado
+         * 
+         * Como funciona:
+         * 1. Aguarda o carregamento completo da estrutura HTML
+         * 2. Busca o botão "Bugs" (primeiro item da navegação)
+         * 3. Carrega automaticamente a seção de bugs como conteúdo inicial
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seleciona o botão que contém 'bugs' no atributo onclick
+            const bugsButton = document.querySelector('button[onclick*="bugs"]');
+            
+            // Se o botão existir, carrega a seção de bugs
+            if (bugsButton) loadSection('bugs', bugsButton);
+        });
+    </script>
+
+</body>
+</html>
