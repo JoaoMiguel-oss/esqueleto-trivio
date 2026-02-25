@@ -1,33 +1,1298 @@
-<div>
-    <h1 class="text-4xl font-bold mb-3">Meu Perfil</h1>
-    <p class="text-gray-500 mb-8">Informações e dados pessoais</p>
+<!-- ===== ESTILOS DA PÁGINA DE PERFIL ===== -->
+<style>
+    /* ---- Layout Principal ---- */
+    .profile-layout {
+        display: flex;
+        gap: 0;
+        min-height: calc(100vh - 73px);
+        margin: -2rem;
+        animation: fadeIn 0.4s ease;
+    }
 
-    <div class="max-w-2xl p-8 rounded-lg" style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.05);">
-        <div class="flex items-center mb-8">
-            <img class="w-20 h-20 rounded-lg object-cover mr-6" src="https://placehold.co/80x80/D97706/1B1B1B?text=AD" alt="Perfil">
-            <div>
-                <h3 class="text-2xl font-bold">Admin User</h3>
-                <p class="text-gray-500">Administrador do Trivio</p>
+    /* ---- Barra Lateral ---- */
+    .profile-sidebar {
+        width: 280px;
+        min-width: 280px;
+        background: linear-gradient(180deg, #111111 0%, #0d0d0d 100%);
+        border-right: 1px solid rgba(233, 30, 99, 0.15);
+        display: flex;
+        flex-direction: column;
+        padding: 2rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .profile-sidebar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--color-primary), var(--color-accent), transparent);
+    }
+
+    /* Avatar na sidebar */
+    .sidebar-avatar-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 1.5rem 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        margin-bottom: 1.5rem;
+    }
+
+    .sidebar-avatar {
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: 800;
+        color: white;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+        position: relative;
+        box-shadow: 0 0 0 4px rgba(233, 30, 99, 0.15), 0 8px 24px rgba(233, 30, 99, 0.3);
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sidebar-avatar:hover {
+        transform: scale(1.04);
+        box-shadow: 0 0 0 4px rgba(233, 30, 99, 0.3), 0 12px 32px rgba(233, 30, 99, 0.4);
+    }
+
+    .sidebar-avatar .avatar-edit-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+    }
+
+    .sidebar-avatar:hover .avatar-edit-overlay {
+        opacity: 1;
+    }
+
+    .sidebar-username {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.25rem;
+        text-align: center;
+    }
+
+    .sidebar-role {
+        font-size: 0.78rem;
+        color: rgba(255, 255, 255, 0.4);
+        text-align: center;
+        letter-spacing: 0.5px;
+    }
+
+    .sidebar-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 0.6rem;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        background: rgba(233, 30, 99, 0.18);
+        color: var(--color-primary);
+        border: 1px solid rgba(233, 30, 99, 0.3);
+    }
+
+    /* Itens de navegação da sidebar */
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 0 0.75rem;
+        flex: 1;
+    }
+
+    .sidebar-nav-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.25);
+        padding: 0.8rem 0.75rem 0.4rem;
+    }
+
+    .sidebar-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+        position: relative;
+    }
+
+    .sidebar-nav-item:hover {
+        color: rgba(255, 255, 255, 0.85);
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .sidebar-nav-item.active {
+        color: #fff;
+        background: linear-gradient(135deg, rgba(233, 30, 99, 0.18), rgba(255, 20, 147, 0.1));
+        border-color: rgba(233, 30, 99, 0.25);
+    }
+
+    .sidebar-nav-item.active .nav-icon {
+        color: var(--color-primary);
+    }
+
+    .sidebar-nav-item .nav-icon {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        transition: color 0.2s;
+    }
+
+    .sidebar-nav-item .nav-pill {
+        margin-left: auto;
+        background: rgba(233, 30, 99, 0.2);
+        color: var(--color-primary);
+        font-size: 0.65rem;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: 8px;
+        border: 1px solid rgba(233, 30, 99, 0.3);
+    }
+
+    /* Rodapé da sidebar */
+    .sidebar-footer {
+        padding: 1.5rem 1.25rem 0;
+        margin-top: auto;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sidebar-footer-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 10px 14px;
+        border-radius: 10px;
+        background: rgba(239, 68, 68, 0.08);
+        border: 1px solid rgba(239, 68, 68, 0.15);
+        color: rgba(239, 68, 68, 0.75);
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .sidebar-footer-btn:hover {
+        background: rgba(239, 68, 68, 0.15);
+        border-color: rgba(239, 68, 68, 0.35);
+        color: #ef4444;
+    }
+
+    /* ---- Área de Conteúdo Principal ---- */
+    .profile-content {
+        flex: 1;
+        background: #141414;
+        overflow-y: auto;
+    }
+
+    /* Cabeçalho da seção */
+    .section-header {
+        padding: 2.5rem 2.5rem 0;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding-bottom: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 0.3rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Painel de personalização */
+    .content-panel {
+        padding: 0 2.5rem 2.5rem;
+        display: none;
+    }
+
+    .content-panel.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    /* Cards dos painéis */
+    .panel-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 14px;
+        padding: 1.75rem;
+        margin-bottom: 1.25rem;
+        transition: border-color 0.3s;
+    }
+
+    .panel-card:hover {
+        border-color: rgba(233, 30, 99, 0.2);
+    }
+
+    .panel-card-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .panel-card-title-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-primary);
+        box-shadow: 0 0 6px rgba(233, 30, 99, 0.6);
+    }
+
+    /* Grupo de form */
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .form-label {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.45);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 11px 15px;
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        color: #fff;
+        font-size: 0.9rem;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.2s ease;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    .form-input:focus {
+        border-color: rgba(233, 30, 99, 0.5);
+        background: rgba(233, 30, 99, 0.05);
+        box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
+    }
+
+    .form-input::placeholder {
+        color: rgba(255, 255, 255, 0.2);
+    }
+
+    .form-textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .form-grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    /* Botões de ação */
+    .action-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 1.5rem;
+    }
+
+    .btn-primary {
+        padding: 11px 24px;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 0.875rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        font-family: 'Inter', sans-serif;
+        box-shadow: 0 4px 16px rgba(233, 30, 99, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(233, 30, 99, 0.45);
+    }
+
+    .btn-secondary {
+        padding: 11px 24px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 10px;
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .btn-secondary:hover {
+        border-color: rgba(255, 255, 255, 0.25);
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Toast de sucesso */
+    .profile-toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: linear-gradient(135deg, #1a1a1a, #242424);
+        border: 1px solid rgba(233, 30, 99, 0.4);
+        border-radius: 12px;
+        padding: 14px 22px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #fff;
+        font-size: 0.875rem;
+        font-weight: 600;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+        z-index: 9999;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .profile-toast.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    /* Toggle Switch */
+    .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .toggle-row:last-child {
+        border-bottom: none;
+    }
+
+    .toggle-info h4 {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 2px;
+    }
+
+    .toggle-info p {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.35);
+    }
+
+    .toggle-switch {
+        position: relative;
+        width: 44px;
+        height: 24px;
+        flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .toggle-slider {
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        cursor: pointer;
+        transition: 0.3s;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .toggle-slider::before {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        top: 2px;
+        left: 2px;
+        transition: 0.3s;
+    }
+
+    .toggle-switch input:checked+.toggle-slider {
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        border-color: var(--color-primary);
+    }
+
+    .toggle-switch input:checked+.toggle-slider::before {
+        transform: translateX(20px);
+        background: white;
+    }
+
+    /* Avatar uploader */
+    .avatar-upload-area {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.25rem;
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 12px;
+        border: 1px dashed rgba(233, 30, 99, 0.25);
+        margin-bottom: 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .avatar-upload-area:hover {
+        background: rgba(233, 30, 99, 0.05);
+        border-color: rgba(233, 30, 99, 0.45);
+    }
+
+    .avatar-preview-lg {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: white;
+        flex-shrink: 0;
+        box-shadow: 0 4px 14px rgba(233, 30, 99, 0.3);
+    }
+
+    .avatar-upload-info h4 {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 3px;
+    }
+
+    .avatar-upload-info p {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Seletor de cores (tema) */
+    .color-option {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 3px solid transparent;
+        transition: all 0.2s;
+        position: relative;
+    }
+
+    .color-option.selected {
+        border-color: white;
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    }
+
+    .color-option:hover {
+        transform: scale(1.1);
+    }
+
+    /* Status badge do plano */
+    .plan-card {
+        background: linear-gradient(135deg, rgba(233, 30, 99, 0.12), rgba(255, 20, 147, 0.06));
+        border: 1px solid rgba(233, 30, 99, 0.25);
+        border-radius: 14px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.25rem;
+    }
+
+    .plan-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: white;
+        text-transform: uppercase;
+    }
+
+    .plan-info h3 {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 4px;
+    }
+
+    .plan-info p {
+        font-size: 0.78rem;
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-upgrade {
+        padding: 10px 20px;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.25s;
+        white-space: nowrap;
+    }
+
+    .btn-upgrade:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+    }
+
+    /* Seção de segurança - zona de perigo */
+    .danger-zone {
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 14px;
+        padding: 1.75rem;
+        background: rgba(239, 68, 68, 0.04);
+    }
+
+    .danger-zone-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: rgba(239, 68, 68, 0.8);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-danger {
+        padding: 10px 20px;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.25);
+        border-radius: 10px;
+        color: rgba(239, 68, 68, 0.8);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.2s;
+    }
+
+    .btn-danger:hover {
+        background: rgba(239, 68, 68, 0.18);
+        border-color: rgba(239, 68, 68, 0.45);
+        color: #ef4444;
+    }
+</style>
+
+<!-- ===== LAYOUT PRINCIPAL COM SIDEBAR ===== -->
+<div class="profile-layout">
+
+    <!-- ===== BARRA LATERAL ESQUERDA ===== -->
+    <aside class="profile-sidebar">
+
+        <!-- Avatar e info do usuário -->
+        <div class="sidebar-avatar-wrapper">
+            <div class="sidebar-avatar" onclick="showPanel('aparencia')" title="Alterar foto">
+                AD
+                <div class="avatar-edit-overlay">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                        stroke-linecap="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                        <circle cx="12" cy="13" r="4" />
+                    </svg>
+                </div>
+            </div>
+            <p class="sidebar-username">Admin User</p>
+            <p class="sidebar-role">Administrador · Trivio</p>
+            <span class="sidebar-badge">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L15 10L23 10L17 15L19 23L12 18L5 23L7 15L1 10L9 10Z" />
+                </svg>
+                Pro Plan
+            </span>
+        </div>
+
+        <!-- Navegação da sidebar -->
+        <nav class="sidebar-nav">
+
+            <span class="sidebar-nav-label">Conta</span>
+
+            <div class="sidebar-nav-item active" id="nav-info" onclick="showPanel('info')">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+                Informações Pessoais
+            </div>
+
+            <div class="sidebar-nav-item" id="nav-empresa" onclick="showPanel('empresa')">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                Dados da Empresa
+            </div>
+
+            <div class="sidebar-nav-item" id="nav-aparencia" onclick="showPanel('aparencia')">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                    <path d="M2 12h20" />
+                </svg>
+                Aparência & Tema
+            </div>
+
+            <span class="sidebar-nav-label">Configurações</span>
+
+            <div class="sidebar-nav-item" id="nav-notificacoes" onclick="showPanel('notificacoes')">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+                Notificações
+                <span class="nav-pill">3</span>
+            </div>
+
+            <div class="sidebar-nav-item" id="nav-seguranca" onclick="showPanel('seguranca')">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                Segurança
+            </div>
+
+            <div class="sidebar-nav-item" id="nav-plano" onclick="showPanel('plano')">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                    <line x1="1" y1="10" x2="23" y2="10" />
+                </svg>
+                Plano & Faturamento
+            </div>
+
+        </nav>
+
+        <!-- Botão de sair -->
+        <div class="sidebar-footer">
+            <button class="sidebar-footer-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                Sair da conta
+            </button>
+        </div>
+    </aside>
+
+    <!-- ===== ÁREA DE CONTEÚDO PRINCIPAL ===== -->
+    <main class="profile-content">
+
+        <!-- ============================= -->
+        <!-- PAINEL: INFORMAÇÕES PESSOAIS  -->
+        <!-- ============================= -->
+        <div class="content-panel active" id="panel-info">
+            <div class="section-header">
+                <h2 class="section-title">Informações Pessoais</h2>
+                <p class="section-subtitle">Atualize seus dados de cadastro e foto de perfil</p>
+            </div>
+
+            <!-- Upload de avatar -->
+            <div style="padding: 0 2.5rem; margin-bottom: 1.25rem;">
+                <div class="avatar-upload-area" onclick="document.getElementById('avatarInput').click()">
+                    <div class="avatar-preview-lg">AD</div>
+                    <div class="avatar-upload-info">
+                        <h4>Foto de Perfil</h4>
+                        <p>Clique para fazer upload · PNG, JPG ou GIF · Máx 5MB</p>
+                    </div>
+                    <input type="file" id="avatarInput" accept="image/*" style="display:none">
+                </div>
+            </div>
+
+            <div style="padding: 0 2.5rem 2.5rem;">
+
+                <!-- Card: Nome -->
+                <div class="panel-card">
+                    <div class="panel-card-title">
+                        <div class="panel-card-title-dot"></div>
+                        Dados Básicos
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">Nome</label>
+                            <input type="text" class="form-input" value="Admin" placeholder="Seu nome">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Sobrenome</label>
+                            <input type="text" class="form-input" value="User" placeholder="Seu sobrenome">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nome de exibição</label>
+                        <input type="text" class="form-input" value="Admin User" placeholder="Como quer ser chamado">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0">
+                        <label class="form-label">Bio / Sobre você</label>
+                        <textarea class="form-input form-textarea"
+                            placeholder="Fale um pouco sobre você ou sua empresa...">Administrador da plataforma Trivio, responsável por gerenciar os desafios técnicos e recrutar talentos.</textarea>
+                    </div>
+                </div>
+
+                <!-- Card: Contato -->
+                <div class="panel-card">
+                    <div class="panel-card-title">
+                        <div class="panel-card-title-dot"></div>
+                        Contato
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">E-mail</label>
+                        <input type="email" class="form-input" value="admin@trivio.com" placeholder="seu@email.com">
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group" style="margin-bottom:0">
+                            <label class="form-label">Telefone</label>
+                            <input type="tel" class="form-input" value="(11) 99999-9999" placeholder="(11) 00000-0000">
+                        </div>
+                        <div class="form-group" style="margin-bottom:0">
+                            <label class="form-label">LinkedIn</label>
+                            <input type="url" class="form-input" placeholder="linkedin.com/in/seu-perfil">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-row">
+                    <button class="btn-primary" onclick="showToast('Informações salvas com sucesso!')">
+                        Salvar alterações
+                    </button>
+                    <button class="btn-secondary">Descartar</button>
+                </div>
             </div>
         </div>
 
-        <div class="space-y-4">
-            <div>
-                <label class="block text-sm font-semibold mb-2">E-mail</label>
-                <input type="email" value="admin@trivio.com" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
+        <!-- ========================= -->
+        <!-- PAINEL: DADOS DA EMPRESA  -->
+        <!-- ========================= -->
+        <div class="content-panel" id="panel-empresa">
+            <div class="section-header">
+                <h2 class="section-title">Dados da Empresa</h2>
+                <p class="section-subtitle">Informações que aparecem para candidatos e na plataforma</p>
             </div>
-            <div>
-                <label class="block text-sm font-semibold mb-2">Telefone</label>
-                <input type="tel" value="(11) 99999-9999" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
-            </div>
-            <div>
-                <label class="block text-sm font-semibold mb-2">Empresa</label>
-                <input type="text" value="Trivio Corp" class="w-full py-2 px-4 rounded-lg bg-gray-900 border border-gray-700 text-white focus:outline-none focus:border-pink-500 transition">
-            </div>
-            <div class="flex gap-4 pt-4">
-                <button class="flex-1 py-2 rounded-lg font-bold text-white transition hover:opacity-90 btn-hover" style="background-color: var(--color-primary);">Salvar</button>
-                <button class="flex-1 py-2 rounded-lg font-bold border-2 transition btn-hover" style="border-color: var(--color-accent); color: var(--color-accent);">Cancelar</button>
+
+            <div style="padding: 0 2.5rem 2.5rem;">
+                <div class="panel-card">
+                    <div class="panel-card-title">
+                        <div class="panel-card-title-dot"></div>
+                        Identidade da Empresa
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nome da Empresa</label>
+                        <input type="text" class="form-input" value="Trivio Corp" placeholder="Nome oficial da empresa">
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">Setor / Segmento</label>
+                            <input type="text" class="form-input" value="Tecnologia"
+                                placeholder="Ex: Tecnologia, Finanças">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tamanho</label>
+                            <select class="form-input" style="cursor:pointer">
+                                <option>1-10 funcionários</option>
+                                <option>11-50 funcionários</option>
+                                <option selected>51-200 funcionários</option>
+                                <option>200+ funcionários</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0">
+                        <label class="form-label">Descrição da empresa</label>
+                        <textarea class="form-input form-textarea"
+                            placeholder="Descreva sua empresa...">Plataforma líder em recrutamento técnico baseado em desafios reais. Conectamos empresas a desenvolvedores talentosos de forma eficiente e inovadora.</textarea>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="panel-card-title">
+                        <div class="panel-card-title-dot"></div>
+                        Localização & Website
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label">País</label>
+                            <input type="text" class="form-input" value="Brasil" placeholder="País">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Cidade</label>
+                            <input type="text" class="form-input" value="São Paulo" placeholder="Cidade">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0">
+                        <label class="form-label">Website</label>
+                        <input type="url" class="form-input" value="https://trivio.com"
+                            placeholder="https://suaempresa.com">
+                    </div>
+                </div>
+
+                <div class="action-row">
+                    <button class="btn-primary" onclick="showToast('Dados da empresa salvos!')">Salvar
+                        alterações</button>
+                    <button class="btn-secondary">Descartar</button>
+                </div>
             </div>
         </div>
-    </div>
+
+        <!-- ============================ -->
+        <!-- PAINEL: APARÊNCIA & TEMA     -->
+        <!-- ============================ -->
+        <div class="content-panel" id="panel-aparencia">
+            <div class="section-header">
+                <h2 class="section-title">Aparência & Tema</h2>
+                <p class="section-subtitle">Personalize as cores e visual da sua conta</p>
+            </div>
+
+            <div style="padding: 0 2.5rem 2.5rem;">
+                <div class="panel-card">
+                    <div class="panel-card-title">
+                        <div class="panel-card-title-dot"></div>
+                        Cor de Destaque
+                    </div>
+                    <p style="font-size:0.8rem; color: rgba(255,255,255,0.35); margin-bottom:1rem;">Escolha a cor
+                        principal da interface</p>
+
+                    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center">
+                        <div class="color-option selected"
+                            style="background: linear-gradient(135deg, #E91E63, #FF1493);" title="Rosa (padrão)"
+                            onclick="selectColor(this, '#E91E63')"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #6C63FF, #8B5CF6);"
+                            title="Roxo" onclick="selectColor(this, '#6C63FF')"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #14B8A6, #06B6D4);"
+                            title="Ciano" onclick="selectColor(this, '#14B8A6')"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #F97316, #EF4444);"
+                            title="Laranja" onclick="selectColor(this, '#F97316')"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #22C55E, #10B981);"
+                            title="Verde" onclick="selectColor(this, '#22C55E')"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #3B82F6, #6366F1);"
+                            title="Azul" onclick="selectColor(this, '#3B82F6')"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #F59E0B, #FBBF24);"
+                            title="Âmbar" onclick="selectColor(this, '#F59E0B')"></div>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="panel-card-title">
+                        <div class="panel-card-title-dot"></div>
+                        Idioma & Região
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group" style="margin-bottom:0">
+                            <label class="form-label">Idioma</label>
+                            <select class="form-input" style="cursor:pointer">
+                                <option selected>Português (BR)</option>
+                                <option>English (US)</option>
+                                <option>Español</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0">
+                            <label class="form-label">Fuso Horário</label>
+                            <select class="form-input" style="cursor:pointer">
+                                <option selected>América/São Paulo (GMT-3)</option>
+                                <option>América/Manaus (GMT-4)</option>
+                                <option>UTC</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-row">
+                    <button class="btn-primary" onclick="showToast('Aparência atualizada!')">Salvar
+                        preferências</button>
+                    <button class="btn-secondary">Restaurar padrão</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================== -->
+        <!-- PAINEL: NOTIFICAÇÕES       -->
+        <!-- ========================== -->
+        <div class="content-panel" id="panel-notificacoes">
+            <div class="section-header">
+                <h2 class="section-title">Notificações</h2>
+                <p class="section-subtitle">Controle quais alertas e e-mails você quer receber</p>
+            </div>
+
+            <div style="padding: 0 2.5rem 2.5rem;">
+                <div class="panel-card">
+                    <div class="panel-card-title">
+                        <div class="panel-card-title-dot"></div>
+                        Notificações por E-mail
+                    </div>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>Desafio concluído</h4>
+                            <p>Receba um e-mail quando um candidato concluir um desafio</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>Novo candidato inscrito</h4>
+                            <p>Alerta quando alguém se inscrever em um desafio seu</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>Relatório semanal</h4>
+                            <p>Resumo semanal de métricas e desempenho</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>Novidades da plataforma</h4>
+                            <p>Atualizações e novas funcionalidades do Trivio</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="panel-card-title">
+                        <div class="panel-card-title-dot"></div>
+                        Notificações Push
+                    </div>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>Ativar notificações push</h4>
+                            <p>Receba alertas em tempo real no navegador</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>Sons de notificação</h4>
+                            <p>Tocar um som ao receber notificações</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="action-row">
+                    <button class="btn-primary" onclick="showToast('Preferências de notificação salvas!')">Salvar
+                        preferências</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================== -->
+        <!-- PAINEL: SEGURANÇA        -->
+        <!-- ======================== -->
+        <div class="content-panel" id="panel-seguranca">
+            <div class="section-header">
+                <h2 class="section-title">Segurança</h2>
+                <p class="section-subtitle">Gerencie sua senha e autenticação em dois fatores</p>
+            </div>
+
+            <div style="padding: 0 2.5rem 2.5rem;">
+                <div class="panel-card">
+                    <div class="panel-card-title">
+                        <div class="panel-card-title-dot"></div>
+                        Alterar Senha
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Senha atual</label>
+                        <input type="password" class="form-input" placeholder="Digite sua senha atual">
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group" style="margin-bottom:0">
+                            <label class="form-label">Nova senha</label>
+                            <input type="password" class="form-input" placeholder="Mínimo 8 caracteres">
+                        </div>
+                        <div class="form-group" style="margin-bottom:0">
+                            <label class="form-label">Confirmar nova senha</label>
+                            <input type="password" class="form-input" placeholder="Repita a nova senha">
+                        </div>
+                    </div>
+                    <div class="action-row" style="margin-top:1.25rem">
+                        <button class="btn-primary" onclick="showToast('Senha alterada com sucesso!')">Atualizar
+                            senha</button>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="panel-card-title">
+                        <div class="panel-card-title-dot"></div>
+                        Autenticação em 2 Fatores
+                    </div>
+                    <div class="toggle-row" style="border:none; padding:0">
+                        <div class="toggle-info">
+                            <h4>Ativar 2FA via Aplicativo</h4>
+                            <p>Use Google Authenticator ou Authy para maior segurança</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Zona de perigo -->
+                <div class="danger-zone">
+                    <div class="danger-zone-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round">
+                            <path
+                                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                            <line x1="12" y1="9" x2="12" y2="13" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg>
+                        Zona de Perigo
+                    </div>
+                    <p style="font-size:0.8rem; color:rgba(255,255,255,0.35); margin-bottom:1rem;">Ações irreversíveis.
+                        Prossiga com cautela.</p>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn-danger">Encerrar todas as sessões</button>
+                        <button class="btn-danger">Deletar conta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================ -->
+        <!-- PAINEL: PLANO & FATURAMENTO  -->
+        <!-- ============================ -->
+        <div class="content-panel" id="panel-plano">
+            <div class="section-header">
+                <h2 class="section-title">Plano & Faturamento</h2>
+                <p class="section-subtitle">Gerencie sua assinatura e métodos de pagamento</p>
+            </div>
+
+            <div style="padding: 0 2.5rem 2.5rem;">
+                <!-- Card do plano atual -->
+                <div class="plan-card">
+                    <div class="plan-info">
+                        <div class="plan-badge" style="margin-bottom:10px;">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2L15 10L23 10L17 15L19 23L12 18L5 23L7 15L1 10L9 10Z" />
+                            </svg>
+                            Pro Plan
+                        </div>
+                        <h3>R$ 199,00 / mês</h3>
+                        <p>Próxima cobrança em 15 de Março de 2026</p>
+                    </div>
+                    <button class="btn-upgrade">Fazer Upgrade</button>
+                </div>
+
+                <!-- Recursos do plano -->
+                <div class="panel-card">
+                    <div class="panel-card-title">
+                        <div class="panel-card-title-dot"></div>
+                        Recursos Incluídos
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+                        <div
+                            style="display:flex; align-items:center; gap:8px; font-size:0.83rem; color:rgba(255,255,255,0.6);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)"
+                                stroke-width="2.5" stroke-linecap="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                            Desafios ilimitados
+                        </div>
+                        <div
+                            style="display:flex; align-items:center; gap:8px; font-size:0.83rem; color:rgba(255,255,255,0.6);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)"
+                                stroke-width="2.5" stroke-linecap="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                            Análise avançada
+                        </div>
+                        <div
+                            style="display:flex; align-items:center; gap:8px; font-size:0.83rem; color:rgba(255,255,255,0.6);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)"
+                                stroke-width="2.5" stroke-linecap="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                            Suporte prioritário
+                        </div>
+                        <div
+                            style="display:flex; align-items:center; gap:8px; font-size:0.83rem; color:rgba(255,255,255,0.6);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)"
+                                stroke-width="2.5" stroke-linecap="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                            Integrações premium
+                        </div>
+                        <div
+                            style="display:flex; align-items:center; gap:8px; font-size:0.83rem; color:rgba(255,255,255,0.6);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)"
+                                stroke-width="2.5" stroke-linecap="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                            API de acesso
+                        </div>
+                        <div
+                            style="display:flex; align-items:center; gap:8px; font-size:0.83rem; color:rgba(255,255,255,0.6);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)"
+                                stroke-width="2.5" stroke-linecap="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                            Exportar relatórios
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="panel-card-title">
+                        <div class="panel-card-title-dot"></div>
+                        Método de Pagamento
+                    </div>
+                    <div
+                        style="display:flex; align-items:center; gap:14px; padding:12px 16px; background:rgba(0,0,0,0.3); border-radius:10px; border:1px solid rgba(255,255,255,0.08);">
+                        <svg width="32" height="20" viewBox="0 0 32 20" fill="none">
+                            <rect width="32" height="20" rx="4" fill="#1A1F71" />
+                            <circle cx="12" cy="10" r="6" fill="#EB001B" opacity="0.9" />
+                            <circle cx="20" cy="10" r="6" fill="#F79E1B" opacity="0.9" />
+                            <ellipse cx="16" cy="10" rx="2" ry="5.5" fill="#FF5F00" opacity="0.8" />
+                        </svg>
+                        <div>
+                            <p style="font-size:0.85rem; font-weight:600; color:rgba(255,255,255,0.8);">Mastercard
+                                terminando em 4242</p>
+                            <p style="font-size:0.72rem; color:rgba(255,255,255,0.35);">Expira em 12/2027</p>
+                        </div>
+                        <button class="btn-secondary"
+                            style="margin-left:auto; padding:7px 14px; font-size:0.75rem;">Trocar</button>
+                    </div>
+                </div>
+
+                <div class="action-row">
+                    <button class="btn-danger" style="padding: 11px 24px; font-size:0.875rem;">Cancelar
+                        assinatura</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
 </div>
+
+<!-- Toast de feedback -->
+<div class="profile-toast" id="profileToast">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5"
+        stroke-linecap="round">
+        <path d="M20 6L9 17l-5-5" />
+    </svg>
+    <span id="toastMessage">Salvo com sucesso!</span>
+</div>
+
+<!-- ===== JAVASCRIPT DA PÁGINA DE PERFIL ===== -->
+<script>
+    // Mostra o painel correspondente e atualiza a sidebar
+    function showPanel(panelName) {
+        // Esconde todos os painéis
+        document.querySelectorAll('.content-panel').forEach(p => {
+            p.classList.remove('active');
+        });
+
+        // Remove estado ativo de todos os itens da sidebar
+        document.querySelectorAll('.sidebar-nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        // Mostra o painel solicitado
+        const panel = document.getElementById('panel-' + panelName);
+        const navItem = document.getElementById('nav-' + panelName);
+
+        if (panel) panel.classList.add('active');
+        if (navItem) navItem.classList.add('active');
+    }
+
+    // Toast de feedback ao salvar
+    function showToast(message) {
+        const toast = document.getElementById('profileToast');
+        const msgEl = document.getElementById('toastMessage');
+        if (!toast || !msgEl) return;
+
+        msgEl.textContent = message || 'Salvo com sucesso!';
+        toast.classList.add('show');
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    // Seletor de cores do tema
+    function selectColor(el, color) {
+        document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+        el.classList.add('selected');
+        // Aplica a cor em toda a plataforma como preview
+        document.documentElement.style.setProperty('--color-primary', color);
+        showToast('Cor de tema atualizada!');
+    }
+</script>
